@@ -13,11 +13,11 @@ export const Hero = () => {
   };
   return (
     <Slider {...settings}>
-      <div>
-        <HeroSlide />
+      <div className="heroImage relative">
+        <HeroSlide black/>
       </div>
-      <div>
-        <h3>2</h3>
+      <div className="heroImage2 relative">
+        <HeroSlide/>
       </div>
     </Slider>
   );

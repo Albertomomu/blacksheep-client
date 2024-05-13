@@ -1,7 +1,14 @@
 .heroImage {
   width: 100%;
   height: 600px;
-  background: url('../../assets/images/hero.jpeg') no-repeat center center;
+  background: url('../../assets/images/hero2.jpeg') no-repeat center center;
   background-size: cover;
 
+}
+
+.heroImage2 {
+  width: 100%;
+  height: 600px;
+  background: url('../../assets/images/hero.jpeg') no-repeat center center;
+  background-size: cover;
 }
