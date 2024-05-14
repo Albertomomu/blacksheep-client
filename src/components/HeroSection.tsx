@@ -3,7 +3,7 @@ import "slick-carousel/slick/slick-theme.css";
 import HeroSlide from "./HeroSlide";
 
 import Slider from "react-slick";
-export const Hero = () => {
+const HeroSection = () => {
   const settings = {
     dots: true,
     infinite: true,
@@ -23,3 +23,4 @@ export const Hero = () => {
   );
 }
 
+export default HeroSection;
