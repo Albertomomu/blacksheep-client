@@ -6,3 +6,4 @@ export { default as PreHeader } from './PreHeader';
 export { default as HeroSection } from './HeroSection';
 export { default as CategoriesSection } from './CategoriesSection';
 export { default as SearchButton } from './SearchButton';
+export { default as ProductsGrid } from './ProductsGrid';
