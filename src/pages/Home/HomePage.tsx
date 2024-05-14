@@ -1,10 +1,11 @@
 import './HomePage.css'
-import { HeroSection, Layout } from '../../components';
+import { CategoriesSection, HeroSection, Layout } from '../../components';
 
 function HomePage() {
   return (
     <Layout>
       <HeroSection />
+      <CategoriesSection />
     </Layout>
   )
 }
