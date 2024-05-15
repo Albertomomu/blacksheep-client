@@ -12,3 +12,8 @@
   background: url('../../assets/images/hero.jpeg') no-repeat center center;
   background-size: cover;
 }
+
+.discountBanner {
+  background: url('../../assets/images/discountbg.jpeg') no-repeat center center;
+  background-size: cover;
+}

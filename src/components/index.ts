@@ -7,3 +7,4 @@ export { default as CategoriesSection } from './CategoriesSection';
 export { default as SearchButton } from './SearchButton';
 export { default as ProductsGrid } from './ProductsGrid';
 export { default as ProductCard } from './ProductCard'
+export { default as DiscountBanner } from './DiscountBanner'
