@@ -1,6 +1,7 @@
 import React from 'react'
 import { ProductsGrid } from './';
 
+
 const CategoriesSection = () => {
   return (
     <section className='mt-32'>

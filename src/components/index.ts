@@ -1,4 +1,3 @@
-
 export { default as Header } from './Header';
 export { default as Footer } from './Footer';
 export { default as Layout } from './Layout';
@@ -7,3 +6,4 @@ export { default as HeroSection } from './HeroSection';
 export { default as CategoriesSection } from './CategoriesSection';
 export { default as SearchButton } from './SearchButton';
 export { default as ProductsGrid } from './ProductsGrid';
+export { default as ProductCard } from './ProductCard'

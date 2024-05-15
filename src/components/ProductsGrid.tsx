@@ -1,8 +1,14 @@
 import React from 'react'
+import { ProductCard } from '../components'
 
 const ProductsGrid = () => {
   return (
-    <div>ProductsGrid</div>
+    <div className='flex gap-8 justify-between w-full'>
+      <ProductCard />
+      <ProductCard />
+      <ProductCard />
+      <ProductCard />
+    </div>
   )
 }
 
