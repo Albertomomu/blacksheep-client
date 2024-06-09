@@ -17,7 +17,7 @@ const HeroSection = () => {
         <HeroSlide black/>
       </div>
       <div className="heroImage2 relative">
-        <HeroSlide/>
+        <HeroSlide black={undefined}/>
       </div>
     </Slider>
   );
