@@ -20,7 +20,7 @@ jobs:
           server: 149.202.43.245
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
-          server-dir: /var/www/blacksheepclothing.es
+          server-dir: /var/www/blacksheepclothing.es/
 
       - name: Check if Sync files step was successful
         if: steps.sync-files.outcome == 'failure'
