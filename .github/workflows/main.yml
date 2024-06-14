@@ -20,8 +20,6 @@ jobs:
           server: 149.202.43.245
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
-          protocol: ftps
-          port: 57
           server-dir: /var/www/blacksheepclothing.es/
 
       - name: Check if Sync files step was successful
