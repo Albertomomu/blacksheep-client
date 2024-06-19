@@ -3,14 +3,14 @@ import logo from "../assets/images/logo-white.png"; // Importa el logo
 function Footer() {
   return (
     <footer
-      className="bg-gray-950 text-center text-white lg:text-left mt-32">
+      className="bg-gray-950 text-center text-white lg:text-left mt-0">
       <div
-        className="flex items-center justify-center border-b-2 border-neutral-200 p-6 dark:border-neutral-500 lg:justify-between">
-        <div className="mr-12 hidden lg:block">
+        className="flex items-center w-full justify-center border-b-2 border-neutral-200 p-6 dark:border-neutral-500 lg:justify-between">
+        <div className="hidden lg:block">
           <span>Síguenos en nuestras redes sociales:</span>
         </div>
         {/* <!-- Social network icons container --> */}
-        <div className="flex justify-center">
+        <div className="flex justify-between w-80">
           <a className="mr-6 text-white dark:text-neutral-200">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -80,8 +80,8 @@ function Footer() {
       <div className="mx-6 py-10 text-center md:text-left">
         <div className="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* <!-- TW Elements section --> */}
-          <div className="flex flex-col justify-between">
-            <img src={logo} alt="" width="150px" height="auto" />
+          <div className="flex flex-col justify-center items-center gap-4">
+            <img src={logo} alt="" width="60%" height="auto" />
             <p>
               Tu tienda de confianza para gente joven con la mejor calidad del mercado al mejor precio.
             </p>
