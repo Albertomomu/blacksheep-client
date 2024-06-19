@@ -35,3 +35,7 @@ jobs:
       - name: 🚀 Install dependencies
         if: success()
         run: npm install
+        
+      - name: 🏗 Build project
+        if: success()
+        run: npm run build 
