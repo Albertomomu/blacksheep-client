@@ -13,6 +13,17 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
+      - name: 🛠 Install Node.js and dependencies
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+
+      - name: 🚀 Install dependencies
+        run: npm install
+
+      - name: 🏗 Build project
+        run: npm run build
+
       - name: 📂 Sync files
         id: sync-files
         uses: SamKirkland/FTP-Deploy-Action@v4.0.0
@@ -25,17 +36,3 @@ jobs:
       - name: Check if Sync files step was successful
         if: steps.sync-files.outcome == 'failure'
         run: exit 1 # This will stop the workflow if the Sync files step fails
-
-      - name: 🛠 Install Node.js and dependencies
-        if: success()
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18.x"
-
-      - name: 🚀 Install dependencies
-        if: success()
-        run: npm install
-        
-      - name: 🏗 Build project
-        if: success()
-        run: npm run build 
