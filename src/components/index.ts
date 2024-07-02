@@ -8,3 +8,4 @@ export { default as SearchButton } from './SearchButton';
 export { default as ProductsGrid } from './ProductsGrid';
 export { default as ProductCard } from './ProductCard'
 export { default as DiscountBanner } from './DiscountBanner'
+export { default as LoginForm } from './LoginForm'
