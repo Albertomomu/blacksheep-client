@@ -12,7 +12,7 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://server.blacksheepclothing.es:3000/auth/login/', {
+      const response = await axios.post('https://149.202.43.245:3000/auth/login/', {
         email,
         password,
       }, {
