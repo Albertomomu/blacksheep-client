@@ -2,12 +2,14 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import useUserStore from '../store/userStore';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate(); // Inicializa el hook useHistory
+  const { setUser } = useUserStore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,8 +21,7 @@ const LoginForm = () => {
         withCredentials: true, // Asegúrate de enviar las credenciales
       });
       const { accessToken, user } = response.data;
-      console.log('Login successful:', accessToken, user);
-       // Redirige al usuario al perfil
+       setUser(user, accessToken);
        navigate('/profile');
     } catch (error) {
       setError('Invalid email or password. Please try again.');
