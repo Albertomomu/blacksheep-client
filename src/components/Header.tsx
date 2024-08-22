@@ -69,12 +69,16 @@ function Header() {
           isOpen ? 'transform translate-x-00' : 'transform -translate-x-full'
         }`}
       >
-        <nav className="flex flex-col items-start w-full">
-          <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Tienda</a>
-          <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Sobre Nosotros</a>
-          <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Contacto</a>
-          <a href={user ? '/profile' : '/login'} className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Perfil</a>
-          <LogoutButton />
+        <nav className="flex flex-col items-start w-full h-[95%]">
+          <div className='flex flex-col items-center justify-between h-full'>
+            <div>
+              <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Tienda</a>
+              <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Sobre Nosotros</a>
+              <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Contacto</a>
+              <a href={user ? '/profile' : '/login'} className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Perfil</a>
+            </div>
+            <LogoutButton />
+          </div>
         </nav>
       </div>
     </div>
