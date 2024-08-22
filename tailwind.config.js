@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'Open Sans': ['Open Sans'],
+        'open-sans': ['Open Sans'],
+        'barlow': ['barlow'],
       }
     },
   },

@@ -10,4 +10,18 @@
     font-display: swap;
     src: url('./assets/fonts/OpenSans/OpenSans-Regular.ttf') format('ttf');
   }
+  @font-face {
+    font-family: 'barlow';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./assets/fonts/Barlow/Barlow-Regular.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'barlow';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('./assets/fonts/Barlow/Barlow-Bold.ttf') format('truetype');
+  }
 }
