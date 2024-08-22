@@ -9,7 +9,7 @@ const LoginForm = () => {
   const [error, setError] = useState('');
   const [emailError, setEmailError] = useState('');
   const navigate = useNavigate(); // Inicializa el hook useNavigate
-  const { setUser } = useUserStore();
+  const setUser = useUserStore((state) => state.setUser);
 
   const validateEmail = (email: string) => {
     // Expresión regular para validar el formato del correo electrónico
@@ -35,8 +35,14 @@ const LoginForm = () => {
         withCredentials: true, // Asegúrate de enviar las credenciales
       });
       const { accessToken, user } = response.data;
-      setUser(user, accessToken);
-      navigate('/profile');
+      if (user && accessToken) {
+        setUser(user, accessToken);
+        console.log('Usuario guardado:', user);
+        console.log('Token guardado:', accessToken);
+        navigate('/profile');
+      } else {
+        throw new Error('Respuesta del servidor incompleta');
+      }
     } catch (error) {
       setError('Email o contraseña incorrectos. Intentalo de nuevo.');
       console.error('Login error:', error);

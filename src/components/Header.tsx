@@ -2,10 +2,15 @@ import { useState } from 'react';
 import logo from '../assets/images/logo.png'; // Import the logo
 import SearchButton from './SearchButton';
 import useUserStore from '../store/userStore';
+import LogoutButton from './LogoutButton';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useUserStore();
+  const { user } = useUserStore(state => ({
+    user: state.user,
+  }));
+
+  console.log(user);
 
   return (
     <div className="w-full mx-auto max-w-[1600px] flex justify-between px-12 py-4">
@@ -22,7 +27,8 @@ function Header() {
       <div className='flex items-center gap-6'>
         <SearchButton />
         <button className='hidden md:block'>Carrito</button>
-        <button className='hidden md:block'>Perfil</button>
+        <a href={user ? '/profile' : '/login'} className='hidden md:block'>Perfil</a>
+        <LogoutButton />
 
         {/* Hamburger Menu Button */}
         <button
@@ -66,6 +72,7 @@ function Header() {
           <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Sobre Nosotros</a>
           <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Contacto</a>
           <a href={user ? '/profile' : '/login'} className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Perfil</a>
+          <LogoutButton />
         </nav>
       </div>
     </div>

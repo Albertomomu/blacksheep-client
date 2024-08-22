@@ -1,5 +1,5 @@
-// src/store/userStore.ts
-import create from 'zustand';
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface User {
   id: number;
@@ -19,11 +19,19 @@ interface UserState {
   clearUser: () => void;
 }
 
-const useUserStore = create<UserState>((set) => ({
-  user: null,
-  accessToken: null,
-  setUser: (user: User, token: string) => set({ user, accessToken: token }),
-  clearUser: () => set({ user: null, accessToken: null }),
-}));
+const useUserStore = create<UserState>()(
+  persist(
+    (set) => ({
+      user: null,
+      accessToken: null,
+      setUser: (user: User, token: string) => set({ user, accessToken: token }),
+      clearUser: () => set({ user: null, accessToken: null }),
+    }),
+    {
+      name: 'user-storage',
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);
 
 export default useUserStore;
