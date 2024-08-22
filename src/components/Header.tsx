@@ -1,24 +1,28 @@
 import { useState } from 'react';
 import logo from '../assets/images/logo.png'; // Import the logo
 import SearchButton from './SearchButton';
+import useUserStore from '../store/userStore';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useUserStore();
 
   return (
     <div className="w-full mx-auto max-w-[1600px] flex justify-between px-12 py-4">
       <div className='flex items-center gap-24'>
-        <img src={logo} alt="Logo" width={150} height="auto" />
+        <a href="/">
+          <img src={logo} alt="" width={150} height="auto"/>
+        </a>
         <nav className='hidden md:flex gap-5 font-openSans'>
-          <a href="/">Home</a>
-          <a href="#">Shop</a>
-          <a href="#">About us</a>
-          <a href="#">Contact</a>
+          <a href="#">Tienda</a>
+          <a href="#">Sobre Nosotros</a>
+          <a href="#">Contacto</a>
         </nav>
       </div>
       <div className='flex items-center gap-6'>
         <SearchButton />
-        <button className='hidden md:block'>Cart</button>
+        <button className='hidden md:block'>Carrito</button>
+        <button className='hidden md:block'>Perfil</button>
 
         {/* Hamburger Menu Button */}
         <button
@@ -58,10 +62,10 @@ function Header() {
         }`}
       >
         <nav className="flex flex-col items-start w-full">
-          <a href="/" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Home</a>
-          <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Shop</a>
-          <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">About us</a>
-          <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Contact</a>
+          <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Tienda</a>
+          <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Sobre Nosotros</a>
+          <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Contacto</a>
+          <a href={user ? '/profile' : '/login'} className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Perfil</a>
         </nav>
       </div>
     </div>
