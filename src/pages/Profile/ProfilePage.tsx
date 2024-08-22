@@ -10,7 +10,10 @@ const LoginPage: React.FC = () => {
     <div className="login-page">
       <h1>Bienvenido a Black Sheep</h1>
       {user ? (
-        <p>Hola, {user.firstName} {user.lastName}!</p>
+        <>
+          <p>Hola, {user.firstName} {user.lastName}!</p>
+          <a className='bg-black text-white font-barlow font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-12' href="/shop">Visitar tienda</a>
+        </>
       ) : (
         <p>Por favor, inicia sesión para ver tu información.</p>
       )}
