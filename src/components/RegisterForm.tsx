@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { useState, CSSProperties } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useUserStore from '../store/userStore';
+import PacmanLoader from "react-spinners/PacmanLoader";
+
+const loaderOverride: CSSProperties = {
+  display: "block",
+  margin: "0 auto",
+};
 
 const RegisterForm = () => {
+  const [loading, setLoading] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -14,13 +21,16 @@ const RegisterForm = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { setUser } = useUserStore();
+  const setUser = useUserStore((state) => state.setUser);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
 
     if (password !== confirmPassword) {
       setError('Las contraseñas no coinciden.');
+      setLoading(false);
       return;
     }
 
@@ -38,17 +48,39 @@ const RegisterForm = () => {
       });
       
       const { accessToken, user } = response.data;
-      setUser(user, accessToken);
-      navigate('/profile');
+      if (user && accessToken) {
+        setUser(user, accessToken);
+        navigate('/profile');
+      } else {
+        throw new Error('Respuesta del servidor incompleta');
+      }
     } catch (error) {
-      setError('El registro falló. Inténtalo de nuevo.');
+      if (axios.isAxiosError(error) && error.response) {
+        setError(error.response.data.message || 'El registro falló. Inténtalo de nuevo.');
+      } else {
+        setError('El registro falló. Inténtalo de nuevo.');
+      }
       console.error('Registration error:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center w-full">
-      <div className="w-full max-w-md bg-white rounded px-8 pt-6 pb-8 mb-4">
+      {loading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
+          <PacmanLoader
+            color={"#ffffff"}
+            loading={loading}
+            cssOverride={loaderOverride}
+            size={60} // Ajusta el tamaño del loader según sea necesario
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      )}
+      <div className="w-full max-w-md bg-white rounded px-8 pt-6 pb-4">
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="firstName" className="block text-gray-700 text-sm font-barlow font-bold mb-2">Nombre</label>
@@ -86,7 +118,7 @@ const RegisterForm = () => {
           <div className="mb-4">
             <label htmlFor="phone" className="block text-gray-700 text-sm font-barlow font-bold mb-2">Teléfono</label>
             <input
-              type="text"
+              type="tel"
               id="phone"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
@@ -114,7 +146,7 @@ const RegisterForm = () => {
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label htmlFor="password" className="block text-gray-700 text-sm font-barlow font-bold mb-2">Contraseña</label>
             <input
               type="password"
@@ -140,15 +172,16 @@ const RegisterForm = () => {
           <div className="flex items-center justify-between">
             <button
               type="submit"
+              disabled={loading}
               className="bg-black hover:bg-gray-300 hover:text-black transition duration-300 text-white font-barlow font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
             >
               Registrarse
             </button>
           </div>
-          <div className='flex items-center justify-center mt-5'>
-            <span className='font-barlow'>¿Ya tienes cuenta? <a className='text-blue-500 cursor-pointer underline' href='/login'>Inicia sesión</a></span>
-          </div>
         </form>
+      </div>
+      <div className='flex items-center justify-center mb-8'>
+        <span className='font-barlow'>¿Ya tienes cuenta? <a className='text-blue-500 cursor-pointer underline' href='/login'>Inicia sesión</a></span>
       </div>
     </div>
   );

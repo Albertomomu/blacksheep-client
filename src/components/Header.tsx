@@ -28,7 +28,9 @@ function Header() {
         <SearchButton />
         <button className='hidden md:block'>Carrito</button>
         <a href={user ? '/profile' : '/login'} className='hidden md:block'>Perfil</a>
+        <div className='hidden md:block'>
         <LogoutButton />
+        </div>
 
         {/* Hamburger Menu Button */}
         <button
