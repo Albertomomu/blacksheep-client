@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, CSSProperties } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useUserStore from '../store/userStore';
