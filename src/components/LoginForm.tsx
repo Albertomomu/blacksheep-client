@@ -76,7 +76,7 @@ const LoginForm = () => {
           <div className="flex items-center justify-between">
             <button
               type="submit"
-              className="bg-black hover:bg-blue-700 text-white font-barlow font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+              className="bg-black hover:bg-gray-300 hover:text-black transition duration-300 text-white font-barlow font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
             >
               Iniciar sesión
             </button>
