@@ -3,9 +3,9 @@ import logo from '../assets/images/logo.png'; // Import the logo
 import SearchButton from './SearchButton';
 import useUserStore from '../store/userStore';
 import LogoutButton from './LogoutButton';
+import { ShoppingCart, User } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Search, ShoppingCart, User } from "lucide-react"
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,27 +22,22 @@ function Header() {
           <img src={logo} alt="" width={150} height="auto"/>
         </a>
         <nav className='hidden md:flex gap-5 font-openSans'>
-          <a href="#">Tienda</a>
+          <a href="/products">Tienda</a>
           <a href="#">Sobre Nosotros</a>
           <a href="#">Contacto</a>
         </nav>
       </div>
       <div className='flex items-center gap-6'>
-      <div className="flex items-center space-x-4">
-        <div className="relative hidden md:block">
-          <Input type="search" placeholder="Search products..." className="pl-8 pr-4 py-2 rounded-full" />
-          <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-        </div>
-        <Button variant="ghost" size="icon" className='hidden md:block'>
+        <SearchButton />
+        <Button variant="ghost" size="icon">
           <ShoppingCart className="h-5 w-5" />
         </Button>
-        <Button variant="ghost" size="icon" className='hidden md:block'>
+        <Button variant="ghost" size="icon">
           <User className="h-5 w-5" />
         </Button>
-        <Button variant="destructive" className="hidden md:inline-flex">
-          Cerrar sesión
-        </Button>
-      </div>
+        <div className='hidden md:block'>
+        <LogoutButton />
+        </div>
 
         {/* Hamburger Menu Button */}
         <button
@@ -84,7 +79,7 @@ function Header() {
         <nav className="flex flex-col items-start w-full h-[95%]">
           <div className='flex flex-col items-center justify-between h-full'>
             <div>
-              <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Tienda</a>
+              <a href="/products" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Tienda</a>
               <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Sobre Nosotros</a>
               <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Contacto</a>
               <a href={user ? '/profile' : '/login'} className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Perfil</a>

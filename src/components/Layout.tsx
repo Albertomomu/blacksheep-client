@@ -7,7 +7,7 @@ function Layout({ children }) {
     <div className='min-h-screen flex flex-col items-center text-sm'>
       <PreHeader />
       <Header />
-      <main className='flex-grow container mx-auto'>
+      <main className='flex-grow container max-w-[1600px]'>
         {children}
       </main>
       <Footer />

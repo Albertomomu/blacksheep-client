@@ -1,53 +1,12 @@
-import { Search, ShoppingCart, User } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
 import { Checkbox } from "@/components/ui/checkbox"
-import { PreHeader } from "@/components"
+import { Layout } from '../../components';
 
 export default function ShopPage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <PreHeader />
-
-      {/* Header */}
-      <header className="border-b">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <a href="/" className="text-2xl font-bold">
-            BLACK SHEEP
-          </a>
-          <nav className="hidden md:flex space-x-4">
-            <a href="/shop" className="text-sm font-medium">
-              Shop
-            </a>
-            <a href="/about" className="text-sm font-medium">
-              About Us
-            </a>
-            <a href="/contact" className="text-sm font-medium">
-              Contact
-            </a>
-          </nav>
-          <div className="flex items-center space-x-4">
-            <div className="relative hidden md:block">
-              <Input type="search" placeholder="Search products..." className="pl-8 pr-4 py-2 rounded-full" />
-              <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            </div>
-            <Button variant="ghost" size="icon">
-              <ShoppingCart className="h-5 w-5" />
-            </Button>
-            <Button variant="ghost" size="icon">
-              <User className="h-5 w-5" />
-            </Button>
-            <Button variant="destructive" className="hidden md:inline-flex">
-              Cerrar sesión
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      {/* Category Banner */}
+    <Layout>
       <div className="bg-gray-100 py-4">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <Button variant="ghost">T-Shirts</Button>
@@ -57,9 +16,7 @@ export default function ShopPage() {
         </div>
       </div>
 
-      {/* Main Content */}
       <main className="container mx-auto px-4 py-8 flex flex-col md:flex-row">
-        {/* Filters Sidebar */}
         <aside className="w-full md:w-1/4 pr-8 mb-8 md:mb-0">
           <h2 className="text-xl font-bold mb-4">Filters</h2>
           <div className="space-y-6">
@@ -95,7 +52,6 @@ export default function ShopPage() {
           </div>
         </aside>
 
-        {/* Product Grid */}
         <section className="w-full md:w-3/4">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold">All Products</h1>
@@ -117,8 +73,7 @@ export default function ShopPage() {
                 <img
                   src={`https://via.placeholder.com/400x300?text=Product+${item}`}
                   alt={`Product ${item}`}
-                  className="w-full h-64 object-cover"
-                />
+                  className="w-full h-64 object-cover" />
                 <div className="p-4">
                   <h3 className="text-xl font-semibold mb-2">Classic T-Shirt</h3>
                   <p className="text-gray-600 mb-4">100% Premium Cotton</p>
@@ -130,7 +85,6 @@ export default function ShopPage() {
               </div>
             ))}
           </div>
-          {/* Pagination */}
           <div className="mt-12 flex justify-center">
             <nav className="inline-flex rounded-md shadow">
               <Button variant="outline">Previous</Button>
@@ -142,6 +96,6 @@ export default function ShopPage() {
           </div>
         </section>
       </main>
-    </div>
+    </Layout>
   )
 }
