@@ -3,6 +3,9 @@ import logo from '../assets/images/logo.png'; // Import the logo
 import SearchButton from './SearchButton';
 import useUserStore from '../store/userStore';
 import LogoutButton from './LogoutButton';
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Search, ShoppingCart, User } from "lucide-react"
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,12 +28,21 @@ function Header() {
         </nav>
       </div>
       <div className='flex items-center gap-6'>
-        <SearchButton />
-        <button className='hidden md:block'>Carrito</button>
-        <a href={user ? '/profile' : '/login'} className='hidden md:block'>Perfil</a>
-        <div className='hidden md:block'>
-        <LogoutButton />
+      <div className="flex items-center space-x-4">
+        <div className="relative hidden md:block">
+          <Input type="search" placeholder="Search products..." className="pl-8 pr-4 py-2 rounded-full" />
+          <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
         </div>
+        <Button variant="ghost" size="icon" className='hidden md:block'>
+          <ShoppingCart className="h-5 w-5" />
+        </Button>
+        <Button variant="ghost" size="icon" className='hidden md:block'>
+          <User className="h-5 w-5" />
+        </Button>
+        <Button variant="destructive" className="hidden md:inline-flex">
+          Cerrar sesión
+        </Button>
+      </div>
 
         {/* Hamburger Menu Button */}
         <button
