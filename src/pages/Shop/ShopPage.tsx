@@ -3,18 +3,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Layout } from '../../components';
+import ShopCategories from "@/components/ShopCategories";
 
 export default function ShopPage() {
   return (
     <Layout>
-      <div className="bg-gray-100 py-4">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <Button variant="ghost">T-Shirts</Button>
-          <Button variant="ghost">Hoodies</Button>
-          <Button variant="ghost">Tanks</Button>
-          <Button variant="ghost">Accessories</Button>
-        </div>
-      </div>
+      <ShopCategories />
 
       <main className="container mx-auto px-4 py-8 flex flex-col md:flex-row">
         <aside className="w-full md:w-1/4 pr-8 mb-8 md:mb-0">
