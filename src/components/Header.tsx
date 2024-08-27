@@ -16,7 +16,7 @@ function Header() {
   console.log(user);
 
   return (
-    <div className="w-full mx-auto max-w-[1600px] flex justify-between px-12 py-4">
+    <div className="w-full mx-auto max-w-[1600px] flex justify-between py-4">
       <div className='flex items-center gap-24'>
         <a href="/">
           <img src={logo} alt="" width={150} height="auto"/>
@@ -72,7 +72,7 @@ function Header() {
 
       {/* Mobile Menu */}
       <div
-        className={`absolute top-0 left-0 w-full h-screen bg-white shadow-lg z-40 flex flex-col items-start p-4 gap-4 transition-transform duration-300 ease-in-out ${
+        className={`absolute top-0 left-0 w-full h-screen bg-white shadow-lg z-40 flex flex-col items-start py-4 gap-4 transition-transform duration-300 ease-in-out ${
           isOpen ? 'transform translate-x-00' : 'transform -translate-x-full'
         }`}
       >

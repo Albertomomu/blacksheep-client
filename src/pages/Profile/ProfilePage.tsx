@@ -12,7 +12,7 @@ const LoginPage: React.FC = () => {
       {user ? (
         <>
           <p>Hola, {user.firstName} {user.lastName}!</p>
-          <a className='bg-black text-white font-barlow font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-12' href="/shop">Visitar tienda</a>
+          <a className='bg-black text-white font-barlow font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-12' href="/products">Visitar tienda</a>
         </>
       ) : (
         <p>Por favor, inicia sesión para ver tu información.</p>
