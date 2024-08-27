@@ -13,8 +13,6 @@ function Header() {
     user: state.user,
   }));
 
-  console.log(user);
-
   return (
     <div className="w-full mx-auto max-w-[1600px] flex justify-between py-4">
       <div className='flex items-center gap-24'>

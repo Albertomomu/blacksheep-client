@@ -47,8 +47,6 @@ const LoginForm = () => {
       const { accessToken, user } = response.data;
       if (user && accessToken) {
         setUser(user, accessToken);
-        console.log('Usuario guardado:', user);
-        console.log('Token guardado:', accessToken);
         navigate('/profile');
       } else {
         throw new Error('Respuesta del servidor incompleta');
