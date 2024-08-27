@@ -14,7 +14,7 @@ function Header() {
   }));
 
   return (
-    <div className="w-full mx-auto max-w-[1600px] flex justify-between py-4">
+    <div className="w-full mx-auto max-w-[1600px] flex justify-between py-4 px-4">
       <div className='flex items-center gap-24'>
         <a href="/">
           <img src={logo} alt="" width={150} height="auto"/>

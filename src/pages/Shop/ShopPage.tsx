@@ -22,16 +22,16 @@ export default function ShopPage() {
 
   return (
     <Layout>
-      <main className="container mx-auto px-0 py-8 flex flex-col md:flex-row max-w-[1600px]">
+      <main className="container mx-auto px-4 py-8 flex flex-col md:flex-row max-w-[1600px]">
       <aside className="w-full md:w-1/5 pr-8 mb-8 md:mb-0">
       <h2 className="text-xl font-bold mb-4">Filtros</h2>
       <div className="space-y-6">
         <div>
           <h3 className="font-semibold mb-2">Precio maximo</h3>
-          <Slider defaultValue={[50]} max={100} step={1} />
+          <Slider defaultValue={[100]} max={100} step={1} />
           <div className="flex justify-between mt-2">
-            <span>100€</span>
             <span>0€</span>
+            <span>100€</span>
           </div>
         </div>
         <div>
@@ -66,10 +66,10 @@ export default function ShopPage() {
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="price-low-high">Price: Low to High</SelectItem>
-                <SelectItem value="price-high-low">Price: High to Low</SelectItem>
-                <SelectItem value="newest">Newest</SelectItem>
-                <SelectItem value="popular">Most Popular</SelectItem>
+                <SelectItem value="price-low-high">Precio: Más bajo primero</SelectItem>
+                <SelectItem value="price-high-low">Precio: Más alto primero</SelectItem>
+                <SelectItem value="newest">Nuevo</SelectItem>
+                <SelectItem value="popular">Popular</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -79,7 +79,7 @@ export default function ShopPage() {
                 <img
                   src={image}
                   alt={`Product ${item}`}
-                  className="w-full h-64 object-contain" />
+                  className="w-full h-100 object-cover" />
                 <div className="p-4">
                   <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
                   <p className="text-gray-600 mb-4">{item.description}</p>
@@ -93,11 +93,11 @@ export default function ShopPage() {
           </div>
           <div className="mt-12 flex justify-center">
             <nav className="inline-flex rounded-md shadow">
-              <Button variant="outline">Previous</Button>
+              <Button variant="outline">Anterior</Button>
               <Button variant="outline">1</Button>
               <Button variant="outline">2</Button>
               <Button variant="outline">3</Button>
-              <Button variant="outline">Next</Button>
+              <Button variant="outline">Siguiente</Button>
             </nav>
           </div>
         </section>
