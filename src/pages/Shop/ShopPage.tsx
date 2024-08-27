@@ -66,10 +66,10 @@ export default function ShopPage() {
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value="newest">Más nuevo</SelectItem>
                 <SelectItem value="price-low-high">Precio: Más bajo primero</SelectItem>
                 <SelectItem value="price-high-low">Precio: Más alto primero</SelectItem>
-                <SelectItem value="newest">Nuevo</SelectItem>
-                <SelectItem value="popular">Popular</SelectItem>
+                <SelectItem value="popular">Más popular</SelectItem>
               </SelectContent>
             </Select>
           </div>
