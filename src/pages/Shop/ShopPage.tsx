@@ -13,6 +13,7 @@ export default function ShopPage() {
 
   const handleProducts = async () => {
     const response = await axios.get('https://server.blacksheepclothing.es/products/');
+    console.log(response.data);
     setProducts(response.data);
   }
 
@@ -63,7 +64,7 @@ export default function ShopPage() {
             <h1 className="text-2xl font-bold">Productos</h1>
             <Select>
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Sort by" />
+                <SelectValue placeholder="Ordenar por..." />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="newest">Más nuevo</SelectItem>
