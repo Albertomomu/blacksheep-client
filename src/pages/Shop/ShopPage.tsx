@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Layout } from '../../components';
 import { useEffect, useState } from "react";
 import axios from "axios";
-import image from '../../assets/images/products/1.jpg';
+import image from '../../assets/images/products/1.jpeg';
 
 export default function ShopPage() {
 
@@ -80,7 +80,7 @@ export default function ShopPage() {
                 <img
                   src={image}
                   alt={`Product ${item}`}
-                  className="w-full h-100 object-cover" />
+                  className="w-full h-64 object-cover" />
                 <div className="p-4">
                   <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
                   <p className="text-gray-600 mb-4">{item.description}</p>
