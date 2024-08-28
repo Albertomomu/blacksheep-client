@@ -66,7 +66,7 @@ function ProductDetail() {
                         Tamaño
                       </label>
                       <div className="flex flex-wrap gap-2">
-                        {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                        {['S', 'M', 'L'].map((size) => (
                           <Button key={size} variant="outline" className="flex-1">
                             {size}
                           </Button>
@@ -78,7 +78,7 @@ function ProductDetail() {
                         Color
                       </label>
                       <div className="flex space-x-2">
-                        {['bg-black', 'bg-white', 'bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500'].map((color) => (
+                        {['bg-black'].map((color) => (
                           <button
                             key={color}
                             className={`w-8 h-8 rounded-full ${color} border border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500`}
