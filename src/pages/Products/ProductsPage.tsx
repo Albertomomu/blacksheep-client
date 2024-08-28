@@ -42,18 +42,18 @@ function ProductDetail() {
 
   return (
     <Layout>
-    <div className="container mx-auto px-4 py-8 bg-white text-black">
+    <div className="container mx-auto px-0 py-8 bg-white text-black max-w-[1600px]">
           <Card className="overflow-hidden shadow-none border-none">
             <CardContent className="p-6">
-              <div className="grid md:grid-cols-2 gap-8">
+              <div className="grid md:grid-cols-2 gap-8 place-items-center w-full">
                 <div className="space-y-4">
                   <img
                     src={image}
                     alt="Camiseta Dreamer - Vista frontal y trasera"
-                    className="w-full h-auto object-cover"
+                    className="w-full h-auto object-cover rounded-md"
                   />
                 </div>
-                <div className="space-y-6">
+                <div className="space-y-6 w-full">
                   <div>
                     <h1 className="text-3xl font-bold">{product.name}</h1>
                     <p className="text-xl mt-2">{product.description}</p>
