@@ -1,15 +1,24 @@
-
-const ProductCard = () => {
+import { Button } from "@/components/ui/button"
+import image from '../assets/images/products/1.jpeg';
+import { Link } from "react-router-dom";
+const ProductCard = ({item}) => {
   return (
-    <div className='w-full flex flex-col gap-4'>
-      <img className='rounded' src="https://via.placeholder.com/300x300" alt="" width="100%"/>
-      <div className='flex justify-between mr-4'>
-        <h3 className='font-bold text-lg'>Product Title</h3>
-        <p className='font-bold'>$100.00</p>
+    <Link to={`/products/${item.id}`} key={item.id}>
+    <div key={item} className="bg-white rounded-lg shadow-md overflow-hidden">
+      <img
+        src={image}
+        alt={`Product ${item}`}
+        className="w-full h-64 object-cover" />
+      <div className="p-4">
+        <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
+        <p className="text-gray-600 mb-4">{item.description}</p>
+        <div className="flex justify-between items-center">
+          <span className="text-xl font-bold">{item.price}€</span>
+          <Button>Añadir al carrito</Button>
+        </div>
       </div>
-      <p>Product description is placed here</p>
-      <button className='border-black border-2 rounded-full w-44 px-4 py-2 hover:bg-black hover:text-white transition duration-300'>Add to cart</button>
     </div>
+  </Link>
   )
 }
 
