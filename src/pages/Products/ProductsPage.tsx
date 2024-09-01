@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { Layout } from '../../components';
 import image from '../../assets/images/products/1.jpeg';
 import axios from "axios";
+import Loader from '@/components/Loader';
 
 interface Category {
   id: number;
@@ -37,7 +38,7 @@ function ProductDetail() {
   }, [id])
 
   if (!product) {
-    return <div>Cargando...</div>;
+    return <Loader />
   }
 
   return (

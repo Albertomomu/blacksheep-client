@@ -6,6 +6,7 @@ import LogoutButton from './LogoutButton';
 import { ShoppingCart, User } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { Link } from 'react-router-dom';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,9 +28,11 @@ function Header() {
       </div>
       <div className='flex items-center gap-6'>
         <SearchButton />
-        <Button variant="ghost" size="icon">
-          <ShoppingCart className="h-5 w-5" />
-        </Button>
+        <Link to="/cart">
+          <Button variant="ghost" size="icon">
+            <ShoppingCart className="h-5 w-5" />
+          </Button>
+        </Link>
         <Button variant="ghost" size="icon">
           <User className="h-5 w-5" />
         </Button>

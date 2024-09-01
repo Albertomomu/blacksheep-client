@@ -1,20 +1,7 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 import ProductCard from './ProductCard';
 
 
-const CategoriesSection = () => {
-
-  const [products, setProducts] = useState([]);
-
-  const handleProducts = async () => {
-    const response = await axios.get('https://server.blacksheepclothing.es/products/');
-    setProducts(response.data);
-  }
-
-  useEffect(() => {
-    handleProducts();
-  }, [])
+const CategoriesSection = ({products}) => {
 
   return (
     <section className='mt-12 px-2'>
