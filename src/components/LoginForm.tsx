@@ -1,13 +1,8 @@
-import { useState, CSSProperties } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useUserStore from '../store/userStore';
-import PacmanLoader from "react-spinners/PacmanLoader";
-
-const loaderOverride: CSSProperties = {
-  display: "block",
-  margin: "0 auto",
-};
+import Loader from './Loader';
 
 const LoginForm = () => {
   const [loading, setLoading] = useState(false);
@@ -62,16 +57,7 @@ const LoginForm = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full">
       {loading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
-          <PacmanLoader
-            color={"#ffffff"}
-            loading={loading}
-            cssOverride={loaderOverride}
-            size={60} // Ajusta el tamaño del loader según sea necesario
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          />
-        </div>
+        <Loader />
       )}
       <div className="w-full max-w-md bg-white rounded px-8 pt-6 pb-8 mb-4">
         <form onSubmit={handleSubmit}>
