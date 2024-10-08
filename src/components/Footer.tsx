@@ -133,7 +133,7 @@ function Footer() {
             </div>
           </div>
           <div className="flex justify-between">
-            {/* <!-- TW Elements section --> */}
+            {/* <!-- TW Elements section --> */} 
             <div className="text-left">
               <h6
                 className="mb-4 flex font-semibold uppercase md:justify-start">
