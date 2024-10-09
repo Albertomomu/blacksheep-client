@@ -8,6 +8,8 @@ function HomePage() {
   // Usa el hook de Zustand para acceder al estado y las funciones
   const { products, setProducts } = useProductStore();
 
+  console.log(products);
+
   useEffect(() => {
     const handleProducts = async () => {
       try {

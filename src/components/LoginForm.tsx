@@ -37,8 +37,12 @@ const LoginForm = () => {
         email,
         password,
       }, {
-        withCredentials: true, // Asegúrate de enviar las credenciales
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
+      
       const { accessToken, user } = response.data;
       if (user && accessToken) {
         setUser(user, accessToken);
@@ -47,8 +51,27 @@ const LoginForm = () => {
         throw new Error('Respuesta del servidor incompleta');
       }
     } catch (error) {
-      setError('Email o contraseña incorrectos. Intentalo de nuevo.');
-      console.error('Login error:', error);
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          // El servidor respondió con un código de estado fuera del rango 2xx
+          if (error.response.status === 401) {
+            setError('Email o contraseña incorrectos. Inténtalo de nuevo.');
+          } else {
+            setError(`Error del servidor: ${error.response.data.message || 'Algo salió mal'}`);
+          }
+        } else if (error.request) {
+          // La solicitud se hizo pero no se recibió respuesta
+          setError('No se pudo conectar con el servidor. Verifica tu conexión a internet.');
+        } else {
+          // Algo ocurrió al configurar la solicitud
+          setError(`Error de configuración: ${error.message}`);
+        }
+        console.error('Error de inicio de sesión:', error.message);
+      } else {
+        // Error no relacionado con Axios
+        setError('Ocurrió un error inesperado. Por favor, inténtalo de nuevo.');
+        console.error('Error inesperado:', error);
+      }
     } finally {
       setLoading(false);
     }

@@ -30,7 +30,6 @@ function ProductDetail() {
   useEffect(() => {
     const handleProducts = async () => {
       const response = await axios.get<Product>(`https://server.blacksheepclothing.es/products/${id}`);
-      console.log(response.data);
       setProduct(response.data);
     }
 
@@ -40,7 +39,7 @@ function ProductDetail() {
   if (!product) {
     return <Loader />
   }
-
+  console.log(product);
   return (
     <Layout>
     <div className="container mx-auto px-0 py-8 bg-white text-black max-w-[1600px]">

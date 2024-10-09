@@ -12,6 +12,7 @@ export default function ShopPage() {
 
   const handleProducts = async () => {
     const response = await axios.get('https://server.blacksheepclothing.es/products/');
+    console.log(response.data);
     setProducts(response.data);
   }
 
