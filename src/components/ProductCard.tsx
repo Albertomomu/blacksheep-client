@@ -2,8 +2,7 @@ import { Button } from "@/components/ui/button"
 import image from '../assets/images/products/1.jpeg';
 import { Link } from "react-router-dom";
 import useCartStore from "@/store/cartStore";
-import { useToast } from "../hooks/use-toast"
-
+import { useToast } from "@/components/hooks/use-toast"
 
 const ProductCard = ({item}) => {
   const { addItem } = useCartStore();
@@ -14,8 +13,9 @@ const ProductCard = ({item}) => {
     event.stopPropagation(); // Detiene la propagación del evento
     addItem(item);
     toast({
-      description: "Your message has been sent.",
-    })
+      title: "Producto añadido",
+      description: `${item.name} ha sido añadido al carrito.`,
+    });
   };
 
   return (

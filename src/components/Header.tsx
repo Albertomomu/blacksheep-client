@@ -4,12 +4,15 @@ import SearchButton from './SearchButton';
 import useUserStore from '../store/userStore';
 import LogoutButton from './LogoutButton';
 import { ShoppingCart, User } from "lucide-react"
+import useCartStore from '../store/cartStore';
+
 
 import { Button } from "@/components/ui/button"
 import { Link } from 'react-router-dom';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const totalItems = useCartStore(state => state.getTotalItems());
   const { user } = useUserStore(state => ({
     user: state.user,
   }));
@@ -28,9 +31,14 @@ function Header() {
       </div>
       <div className='flex items-center gap-6'>
         <SearchButton />
-        <Link to="/cart">
+        <Link to="/cart" className="relative">
           <Button variant="ghost" size="icon">
             <ShoppingCart className="h-5 w-5" />
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                {totalItems}
+              </span>
+            )}
           </Button>
         </Link>
         <Link to={user ? '/profile' : '/login'}>
