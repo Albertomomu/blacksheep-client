@@ -20,7 +20,7 @@ const ProductCard = ({item}) => {
 
   return (
     <Link to={`/products/${item.id}`}>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden w-full sm:w-2/4 lg:w-1/4">
         <img
           src={image}
           alt={`Product ${item.name}`}

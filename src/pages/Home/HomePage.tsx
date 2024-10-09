@@ -3,6 +3,7 @@ import { CategoriesSection, HeroSection, Layout, DiscountBanner } from '../../co
 import { useEffect } from 'react';
 import axios from 'axios';
 import useProductStore from '@/store/productStore';
+import ContentContainer from '@/components/ContentContainer';
 
 function HomePage() {
   // Usa el hook de Zustand para acceder al estado y las funciones
@@ -28,7 +29,9 @@ function HomePage() {
   return (
     <Layout>
       <HeroSection />
-      <CategoriesSection products={products} />
+      <ContentContainer>
+        <CategoriesSection products={products} />
+      </ContentContainer>
       <DiscountBanner />
     </Layout>
   )
