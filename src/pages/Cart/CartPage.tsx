@@ -13,6 +13,7 @@ export default function CartPage() {
   const shipping = 4.99
   const subtotal = getTotalPrice()
   const total = subtotal + shipping
+  console.log(items)
 
   const handleQuantityChange = useCallback((id: number, newQuantity: number) => {
     if (newQuantity > 0) {
@@ -49,6 +50,7 @@ export default function CartPage() {
                   />
                   <div className="flex-grow">
                     <h3 className="text-xl font-semibold">{item.name}</h3>
+                    <p>{item.description}</p>
                     <p className="text-lg font-bold mt-2">{parseFloat(item.price).toFixed(2)}€</p>
                   </div>
                   <div className="flex justify-between items-center">
