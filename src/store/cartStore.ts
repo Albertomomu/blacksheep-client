@@ -11,10 +11,11 @@ interface Product {
   id: number;
   name: string;
   description: string;
-  price: string; // Asumiendo que el precio es un string, como se muestra en el ejemplo
+  price: string;
   stock: number;
   categoryId: number;
   category: Category;
+  size: string;
 }
 
 interface CartItem extends Product {

@@ -1,26 +1,12 @@
 import { Button } from "@/components/ui/button"
 import image from '../assets/images/products/1.jpeg';
 import { Link } from "react-router-dom";
-import useCartStore from "@/store/cartStore";
-import { useToast } from "@/components/hooks/use-toast"
 
 const ProductCard = ({item}) => {
-  const { addItem } = useCartStore();
-  const { toast } = useToast();
-
-  const handleAddToCart = (event) => {
-    event.preventDefault(); // Previene la navegación
-    event.stopPropagation(); // Detiene la propagación del evento
-    addItem(item);
-    toast({
-      title: "Producto añadido",
-      description: `${item.name} ha sido añadido al carrito.`,
-    });
-  };
 
   return (
     <Link to={`/products/${item.id}`}>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden w-full sm:w-2/4 lg:w-1/4">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden w-full">
         <img
           src={image}
           alt={`Product ${item.name}`}
@@ -30,7 +16,9 @@ const ProductCard = ({item}) => {
           <p className="text-gray-600 mb-4">{item.description}</p>
           <div className="flex justify-between items-center">
             <span className="text-xl font-bold">{item.price}€</span>
-            <Button onClick={handleAddToCart}>Añadir al carrito</Button>
+            <Link to={`/products/${item.id}`}>
+              <Button>Ver producto</Button>
+            </Link>
           </div>
         </div>
       </div>
