@@ -5,8 +5,14 @@ import { Input } from "@/components/ui/input"
 import { Layout } from '../../components';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { User, Package } from 'lucide-react'
+import useUserStore from '../../store/userStore';
 
-export default function Component() {
+export default function ProfilePage() {
+
+  const user = useUserStore((state) => state.user);
+
+  console.log(user);
+
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8 bg-white text-black">
@@ -21,14 +27,14 @@ export default function Component() {
                   <div className="w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center">
                     <User className="w-16 h-16 text-gray-500" />
                   </div>
-                  <h2 className="text-2xl font-semibold">Juan Pérez</h2>
+                  <h2 className="text-2xl font-semibold">{user?.firstName} {user.lastName}</h2>
                   <Button className="w-full">Cambiar foto</Button>
                 </div>
               </div>
               <div className="md:w-2/3">
                 <Tabs defaultValue="personal" className="w-full">
                   <TabsList className="grid w-full grid-cols-3">
-                    <TabsTrigger value="personal">Información Personal</TabsTrigger>
+                    <TabsTrigger value="personal">Información</TabsTrigger>
                     <TabsTrigger value="address">Dirección</TabsTrigger>
                     <TabsTrigger value="orders">Pedidos</TabsTrigger>
                   </TabsList>
@@ -36,15 +42,15 @@ export default function Component() {
                     <div className="grid gap-4">
                       <div className="grid gap-2">
                         <Label htmlFor="name">Nombre completo</Label>
-                        <Input id="name" defaultValue="Juan Pérez" />
+                        <Input id="name" value={user?.firstName || ''}  />
                       </div>
                       <div className="grid gap-2">
                         <Label htmlFor="email">Correo electrónico</Label>
-                        <Input id="email" defaultValue="juan.perez@example.com" />
+                        <Input id="email" value={user?.email || ''} />
                       </div>
                       <div className="grid gap-2">
                         <Label htmlFor="phone">Teléfono</Label>
-                        <Input id="phone" defaultValue="+34 123 456 789" />
+                        <Input id="phone" value={user?.phone || ''}  />
                       </div>
                     </div>
                   </TabsContent>
@@ -52,15 +58,15 @@ export default function Component() {
                     <div className="grid gap-4">
                       <div className="grid gap-2">
                         <Label htmlFor="street">Calle</Label>
-                        <Input id="street" defaultValue="Calle Mayor, 123" />
+                        <Input id="street" value={user?.address || ''}  />
                       </div>
                       <div className="grid gap-2">
                         <Label htmlFor="city">Ciudad</Label>
-                        <Input id="city" defaultValue="Madrid" />
+                        <Input id="city" value={user?.address || ''}  />
                       </div>
                       <div className="grid gap-2">
                         <Label htmlFor="postcode">Código Postal</Label>
-                        <Input id="postcode" defaultValue="28001" />
+                        <Input id="postcode" value={user?.address || ''}  />
                       </div>
                     </div>
                   </TabsContent>

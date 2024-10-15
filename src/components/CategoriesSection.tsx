@@ -9,7 +9,7 @@ const CategoriesSection = ({products}) => {
       <hr className='h-1 my-8 bg-gray-300 rounded-full'/>
         {products.map((item) => (
           <ProductCard key={item.id} item={item} />
-        ))}
+        ))} 
     </section>
   )
 }
