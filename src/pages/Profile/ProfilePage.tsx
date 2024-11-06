@@ -47,7 +47,7 @@ export default function ProfilePage() {
       const { id, ...updateData } = formData; // eslint-disable-line @typescript-eslint/no-unused-vars
   
       const response = await axios.put(
-        `http://localhost:3000/customers/${user.id}`,
+        `https://server.blacksheepclothing.es/customers/${user.id}`,
         updateData,
         {
           headers: {
