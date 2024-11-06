@@ -7,13 +7,16 @@ import { Layout } from '../../components';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { User, Package } from 'lucide-react'
 import useUserStore from '../../store/userStore';
-import axios from 'axios'; // Asegúrate de tener axios instalado
+import axios from 'axios';
+import { useToast } from "@/components/hooks/use-toast"
 
 export default function ProfilePage() {
   const user = useUserStore((state) => state.user);
+  const accessToken = useUserStore((state) => state.accessToken);
   const setUser = useUserStore((state) => state.setUser);
   const [formData, setFormData] = useState(user);
   const [isChanged, setIsChanged] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     setFormData(user);
@@ -38,14 +41,31 @@ export default function ProfilePage() {
   };
 
   const handleUpdate = async () => {
-    if (!isChanged) return;
-
+    if (!isChanged || !user) return;
+  
     try {
-      const response = await axios.put('https://server.blacksheepclothing.es/auth/update/', formData);
+      const { id, ...updateData } = formData; // eslint-disable-line @typescript-eslint/no-unused-vars
+  
+      const response = await axios.put(
+        `http://localhost:3000/customers/${user.id}`,
+        updateData,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+      );
+  
       if (response.status === 200) {
-        setUser(response.data.user, response.data.token);
+        // Since the server is not returning updated data, we'll use the local formData
+        const updatedUser = { ...user, ...updateData };
+        setUser(updatedUser, accessToken);
+        setFormData(updatedUser);
         setIsChanged(false);
-        alert('Perfil actualizado con éxito');
+        toast({
+          title: "Perfil actualizado",
+          description: `${updatedUser?.firstName}, tu perfil ha sido actualizado correctamente.`,
+        });
       }
     } catch (error) {
       console.error('Error al actualizar el perfil:', error);
@@ -67,7 +87,7 @@ export default function ProfilePage() {
                   <div className="w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center">
                     <User className="w-16 h-16 text-gray-500" />
                   </div>
-                  <h2 className="text-2xl font-semibold">{formData.firstName} {formData.lastName}</h2>
+                  <h2 className="text-2xl font-semibold">{formData?.firstName} {formData?.lastName}</h2>
                   <Button className="w-full">Cambiar foto</Button>
                 </div>
               </div>
@@ -82,19 +102,19 @@ export default function ProfilePage() {
                     <div className="grid gap-4">
                       <div className="grid gap-2">
                         <Label htmlFor="firstName">Nombre</Label>
-                        <Input id="firstName" name="firstName" value={formData.firstName || ''} onChange={handleInputChange} />
+                        <Input id="firstName" name="firstName" value={formData?.firstName || ''} onChange={handleInputChange} />
                       </div>
                       <div className="grid gap-2">
                         <Label htmlFor="lastName">Apellidos</Label>
-                        <Input id="lastName" name="lastName" value={formData.lastName || ''} onChange={handleInputChange} />
+                        <Input id="lastName" name="lastName" value={formData?.lastName || ''} onChange={handleInputChange} />
                       </div>
                       <div className="grid gap-2">
                         <Label htmlFor="email">Correo electrónico</Label>
-                        <Input id="email" name="email" value={formData.email || ''} onChange={handleInputChange} />
+                        <Input id="email" name="email" value={formData?.email || ''} onChange={handleInputChange} />
                       </div>
                       <div className="grid gap-2">
                         <Label htmlFor="phone">Teléfono</Label>
-                        <Input id="phone" name="phone" value={formData.phone || ''} onChange={handleInputChange} />
+                        <Input id="phone" name="phone" value={formData?.phone || ''} onChange={handleInputChange} />
                       </div>
                     </div>
                   </TabsContent>
@@ -102,36 +122,36 @@ export default function ProfilePage() {
                     <div className="grid gap-4">
                       <div className="grid gap-2">
                         <Label htmlFor="street">Calle</Label>
-                        <Input id="street" name="address.street" value={formData.address?.street || ''} onChange={handleInputChange} />
+                        <Input id="street" name="address.street" value={formData?.address?.street || ''} onChange={handleInputChange} />
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="grid gap-2">
                           <Label htmlFor="portal">Portal</Label>
-                          <Input id="portal" name="address.portal" value={formData.address?.portal || ''} onChange={handleInputChange} />
+                          <Input id="portal" name="address.portal" value={formData?.address?.portal || ''} onChange={handleInputChange} />
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="door">Puerta</Label>
-                          <Input id="door" name="address.door" value={formData.address?.door || ''} onChange={handleInputChange} />
+                          <Input id="door" name="address.door" value={formData?.address?.door || ''} onChange={handleInputChange} />
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="grid gap-2">
                           <Label htmlFor="city">Ciudad</Label>
-                          <Input id="city" name="address.city" value={formData.address?.city || ''} onChange={handleInputChange} />
+                          <Input id="city" name="address.city" value={formData?.address?.city || ''} onChange={handleInputChange} />
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="province">Provincia</Label>
-                          <Input id="province" name="address.province" value={formData.address?.province || ''} onChange={handleInputChange} />
+                          <Input id="province" name="address.province" value={formData?.address?.province || ''} onChange={handleInputChange} />
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="grid gap-2">
                           <Label htmlFor="postal_code">Código Postal</Label>
-                          <Input id="postal_code" name="address.postal_code" value={formData.address?.postal_code || ''} onChange={handleInputChange} />
+                          <Input id="postal_code" name="address.postal_code" value={formData?.address?.postal_code || ''} onChange={handleInputChange} />
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="country">País</Label>
-                          <Input id="country" name="address.country" value={formData.address?.country || ''} onChange={handleInputChange} />
+                          <Input id="country" name="address.country" value={formData?.address?.country || ''} onChange={handleInputChange} />
                         </div>
                       </div>
                     </div>
