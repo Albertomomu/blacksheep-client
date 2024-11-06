@@ -58,15 +58,37 @@ export default function ProfilePage() {
                     <div className="grid gap-4">
                       <div className="grid gap-2">
                         <Label htmlFor="street">Calle</Label>
-                        <Input id="street" value={user?.address || ''}  />
+                        <Input id="street" value={user?.address?.street || ''} />
                       </div>
-                      <div className="grid gap-2">
-                        <Label htmlFor="city">Ciudad</Label>
-                        <Input id="city" value={user?.address || ''}  />
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="grid gap-2">
+                          <Label htmlFor="portal">Portal</Label>
+                          <Input id="portal" value={user?.address?.portal || ''} />
+                        </div>
+                        <div className="grid gap-2">
+                          <Label htmlFor="door">Puerta</Label>
+                          <Input id="door" value={user?.address?.door || ''} />
+                        </div>
                       </div>
-                      <div className="grid gap-2">
-                        <Label htmlFor="postcode">Código Postal</Label>
-                        <Input id="postcode" value={user?.address || ''}  />
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="grid gap-2">
+                          <Label htmlFor="city">Ciudad</Label>
+                          <Input id="city" value={user?.address?.city || ''} />
+                        </div>
+                        <div className="grid gap-2">
+                          <Label htmlFor="province">Provincia</Label>
+                          <Input id="province" value={user?.address?.province || ''} />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="grid gap-2">
+                          <Label htmlFor="postal_code">Código Postal</Label>
+                          <Input id="postal_code" value={user?.address?.postal_code || ''} />
+                        </div>
+                        <div className="grid gap-2">
+                          <Label htmlFor="country">País</Label>
+                          <Input id="country" value={user?.address?.country || ''} />
+                        </div>
                       </div>
                     </div>
                   </TabsContent>

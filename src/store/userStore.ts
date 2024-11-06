@@ -1,15 +1,27 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
+interface Address {
+  id: number;
+  street: string;
+  portal: string;
+  door: string;
+  city: string;
+  province: string;
+  postal_code: string;
+  country: string;
+}
+
 interface User {
   id: number;
   firstName: string;
   lastName: string;
   email: string;
   phone?: string;
-  address?: string;
   username: string;
   password?: string;
+  address_id: number;
+  address?: Address;
 }
 
 interface UserState {
