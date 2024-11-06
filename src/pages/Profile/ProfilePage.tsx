@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
@@ -6,12 +7,51 @@ import { Layout } from '../../components';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { User, Package } from 'lucide-react'
 import useUserStore from '../../store/userStore';
+import axios from 'axios'; // Asegúrate de tener axios instalado
 
 export default function ProfilePage() {
-
   const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
+  const [formData, setFormData] = useState(user);
+  const [isChanged, setIsChanged] = useState(false);
 
-  console.log(user);
+  useEffect(() => {
+    setFormData(user);
+  }, [user]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => {
+      if (name.includes('.')) {
+        const [parent, child] = name.split('.');
+        return {
+          ...prevState,
+          [parent]: {
+            ...prevState[parent],
+            [child]: value
+          }
+        };
+      }
+      return { ...prevState, [name]: value };
+    });
+    setIsChanged(true);
+  };
+
+  const handleUpdate = async () => {
+    if (!isChanged) return;
+
+    try {
+      const response = await axios.put('/api/user/update', formData);
+      if (response.status === 200) {
+        setUser(response.data.user, response.data.token);
+        setIsChanged(false);
+        alert('Perfil actualizado con éxito');
+      }
+    } catch (error) {
+      console.error('Error al actualizar el perfil:', error);
+      alert('Error al actualizar el perfil');
+    }
+  };
 
   return (
     <Layout>
@@ -27,7 +67,7 @@ export default function ProfilePage() {
                   <div className="w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center">
                     <User className="w-16 h-16 text-gray-500" />
                   </div>
-                  <h2 className="text-2xl font-semibold">{user?.firstName} {user.lastName}</h2>
+                  <h2 className="text-2xl font-semibold">{formData.firstName} {formData.lastName}</h2>
                   <Button className="w-full">Cambiar foto</Button>
                 </div>
               </div>
@@ -41,16 +81,20 @@ export default function ProfilePage() {
                   <TabsContent value="personal" className="space-y-4">
                     <div className="grid gap-4">
                       <div className="grid gap-2">
-                        <Label htmlFor="name">Nombre completo</Label>
-                        <Input id="name" value={user?.firstName || ''}  />
+                        <Label htmlFor="firstName">Nombre</Label>
+                        <Input id="firstName" name="firstName" value={formData.firstName || ''} onChange={handleInputChange} />
+                      </div>
+                      <div className="grid gap-2">
+                        <Label htmlFor="lastName">Apellidos</Label>
+                        <Input id="lastName" name="lastName" value={formData.lastName || ''} onChange={handleInputChange} />
                       </div>
                       <div className="grid gap-2">
                         <Label htmlFor="email">Correo electrónico</Label>
-                        <Input id="email" value={user?.email || ''} />
+                        <Input id="email" name="email" value={formData.email || ''} onChange={handleInputChange} />
                       </div>
                       <div className="grid gap-2">
                         <Label htmlFor="phone">Teléfono</Label>
-                        <Input id="phone" value={user?.phone || ''}  />
+                        <Input id="phone" name="phone" value={formData.phone || ''} onChange={handleInputChange} />
                       </div>
                     </div>
                   </TabsContent>
@@ -58,36 +102,36 @@ export default function ProfilePage() {
                     <div className="grid gap-4">
                       <div className="grid gap-2">
                         <Label htmlFor="street">Calle</Label>
-                        <Input id="street" value={user?.address?.street || ''} />
+                        <Input id="street" name="address.street" value={formData.address?.street || ''} onChange={handleInputChange} />
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="grid gap-2">
                           <Label htmlFor="portal">Portal</Label>
-                          <Input id="portal" value={user?.address?.portal || ''} />
+                          <Input id="portal" name="address.portal" value={formData.address?.portal || ''} onChange={handleInputChange} />
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="door">Puerta</Label>
-                          <Input id="door" value={user?.address?.door || ''} />
+                          <Input id="door" name="address.door" value={formData.address?.door || ''} onChange={handleInputChange} />
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="grid gap-2">
                           <Label htmlFor="city">Ciudad</Label>
-                          <Input id="city" value={user?.address?.city || ''} />
+                          <Input id="city" name="address.city" value={formData.address?.city || ''} onChange={handleInputChange} />
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="province">Provincia</Label>
-                          <Input id="province" value={user?.address?.province || ''} />
+                          <Input id="province" name="address.province" value={formData.address?.province || ''} onChange={handleInputChange} />
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="grid gap-2">
                           <Label htmlFor="postal_code">Código Postal</Label>
-                          <Input id="postal_code" value={user?.address?.postal_code || ''} />
+                          <Input id="postal_code" name="address.postal_code" value={formData.address?.postal_code || ''} onChange={handleInputChange} />
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="country">País</Label>
-                          <Input id="country" value={user?.address?.country || ''} />
+                          <Input id="country" name="address.country" value={formData.address?.country || ''} onChange={handleInputChange} />
                         </div>
                       </div>
                     </div>
@@ -117,6 +161,11 @@ export default function ProfilePage() {
                     </div>
                   </TabsContent>
                 </Tabs>
+                <div className="mt-6">
+                  <Button onClick={handleUpdate} disabled={!isChanged}>
+                    Actualizar Perfil
+                  </Button>
+                </div>
               </div>
             </div>
           </CardContent>
