@@ -41,7 +41,7 @@ export default function ProfilePage() {
     if (!isChanged) return;
 
     try {
-      const response = await axios.put('/api/user/update', formData);
+      const response = await axios.put('https://server.blacksheepclothing.es/auth/update/', formData);
       if (response.status === 200) {
         setUser(response.data.user, response.data.token);
         setIsChanged(false);
