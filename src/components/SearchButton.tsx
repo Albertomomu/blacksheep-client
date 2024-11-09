@@ -51,25 +51,26 @@ const SearchButton = () => {
           </svg>
         </span>
       </div>
-      {results.length > 0 ? (
-        <div className="absolute top-full left-0 right-0 bg-white border rounded mt-2 z-10">
-          {results.map((result, index) => (
-            <div
-              key={index}
-              className="p-2 hover:bg-gray-100 flex items-center cursor-pointer"
-              onClick={() => handleProductClick(result.id)}
-            >
-              <img src={image} alt={result.name} className="w-10 h-auto mr-2" />
-              <span>{result.name}</span>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="absolute top-full left-0 right-0 bg-white border rounded mt-2 z-10">
-          <p className="text-sm text-gray-500 mt-1 p-2">No se han encontrado resultados</p>
-        </div>
-      )
-      }
+      {searchText && (
+        results.length > 0 ? (
+          <div className="absolute top-full left-0 right-0 bg-white border rounded mt-2 z-10">
+            {results.map((result, index) => (
+              <div
+                key={index}
+                className="p-2 hover:bg-gray-100 flex items-center cursor-pointer"
+                onClick={() => handleProductClick(result.id)}
+              >
+                <img src={image} alt={result.name} className="w-10 h-auto mr-2" />
+                <span>{result.name}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="absolute top-full left-0 right-0 bg-white border rounded mt-2 z-10">
+            <p className="text-sm text-gray-500 mt-1 p-2">No se han encontrado resultados</p>
+          </div>
+        )
+      )}
     </div>
   );
 };
