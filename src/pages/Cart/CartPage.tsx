@@ -13,7 +13,6 @@ export default function CartPage() {
   const shipping = 4.99
   const subtotal = getTotalPrice()
   const total = subtotal + shipping
-  console.log(items)
 
   const handleQuantityChange = useCallback((id: number, newQuantity: number) => {
     if (newQuantity > 0) {
