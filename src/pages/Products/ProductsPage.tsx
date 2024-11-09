@@ -35,7 +35,8 @@ function ProductDetail() {
 
   useEffect(() => {
     const handleProducts = async () => {
-      const response = await axios.get<Product>(`https://server.blacksheepclothing.es/products/${id}`);
+      const response = await axios.get<Product>(`http://localhost:3000/products/${id}`);
+      console.log(response.data);
       setProduct(response.data);
     }
 
