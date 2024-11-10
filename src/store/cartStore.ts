@@ -1,7 +1,6 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import create from 'zustand';
+import { persist } from 'zustand/middleware';
 
-// Asumiendo que ya tienes definida la interfaz Product
 interface Category {
   id: number;
   name: string;
@@ -25,8 +24,8 @@ interface CartItem extends Product {
 interface CartState {
   items: CartItem[];
   addItem: (product: Product) => void;
-  removeItem: (productId: number) => void;
-  updateQuantity: (productId: number, quantity: number) => void;
+  removeItem: (productId: number, size: string) => void;
+  updateQuantity: (productId: number, size: string, quantity: number) => void;
   clearCart: () => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
@@ -37,26 +36,30 @@ const useCartStore = create<CartState>()(
     (set, get) => ({
       items: [],
 
-      addItem: (product: Product) => set((state) => {
-        const existingItem = state.items.find(item => item.id === product.id);
-        if (existingItem) {
-          return {
-            items: state.items.map(item =>
-              item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-            )
-          };
-        } else {
-          return { items: [...state.items, { ...product, quantity: 1 }] };
-        }
-      }),
+      addItem: (product) => {
+        set((state) => {
+          const existingItemIndex = state.items.findIndex(
+            (i) => i.id === product.id && i.size === product.size
+          );
 
-      removeItem: (productId: number) => set((state) => ({
-        items: state.items.filter(item => item.id !== productId)
+          if (existingItemIndex !== -1) {
+            const updatedItems = [...state.items];
+            updatedItems[existingItemIndex].quantity += 1;
+            return { items: updatedItems };
+          } else {
+            const newItem: CartItem = { ...product, quantity: 1 };
+            return { items: [...state.items, newItem] };
+          }
+        });
+      },
+
+      removeItem: (productId, size) => set((state) => ({
+        items: state.items.filter(item => !(item.id === productId && item.size === size))
       })),
 
-      updateQuantity: (productId: number, quantity: number) => set((state) => ({
+      updateQuantity: (productId, size, quantity) => set((state) => ({
         items: state.items.map(item =>
-          item.id === productId ? { ...item, quantity: quantity } : item
+          item.id === productId && item.size === size ? { ...item, quantity: quantity } : item
         )
       })),
 
@@ -73,8 +76,7 @@ const useCartStore = create<CartState>()(
       },
     }),
     {
-      name: 'cart-storage',
-      storage: createJSONStorage(() => localStorage),
+      name: 'cart-storage', // nombre del almacenamiento persistente
     }
   )
 );

@@ -16,9 +16,9 @@ export default function CartPage() {
   const subtotal = getTotalPrice()
   const total = subtotal + shipping
 
-  const handleQuantityChange = useCallback((id: number, newQuantity: number) => {
+  const handleQuantityChange = useCallback((id: number, size: string, newQuantity: number) => {
     if (newQuantity > 0) {
-      updateQuantity(id, newQuantity)
+      updateQuantity(id, size, newQuantity)
     }
   }, [updateQuantity])
 
@@ -43,7 +43,7 @@ export default function CartPage() {
           <CardContent className="p-4 sm:p-6">
             <div className="space-y-6">
               {items.map((item) => (
-                <div key={item.id} className="flex flex-col md:flex-row md:gap-4 space-y-4 p-4 rounded-lg border border-gray-200">
+                <div key={`${item.id}-${item.size}`} className="flex flex-col md:flex-row md:gap-4 space-y-4 p-4 rounded-lg border border-gray-200">
                   <img
                     src={image}
                     alt={`${item.name}`}
@@ -61,7 +61,7 @@ export default function CartPage() {
                         variant="outline" 
                         size="icon" 
                         aria-label="Disminuir cantidad"
-                        onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                        onClick={() => handleQuantityChange(item.id, item.size, item.quantity - 1)}
                       >
                         <Minus className="h-4 w-4" />
                       </Button>
@@ -70,7 +70,7 @@ export default function CartPage() {
                         variant="outline" 
                         size="icon" 
                         aria-label="Aumentar cantidad"
-                        onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                        onClick={() => handleQuantityChange(item.id, item.size, item.quantity + 1)}
                       >
                         <Plus className="h-4 w-4" />
                       </Button>
@@ -79,7 +79,7 @@ export default function CartPage() {
                       variant="ghost" 
                       size="icon" 
                       aria-label="Eliminar producto"
-                      onClick={() => removeItem(item.id)}
+                      onClick={() => removeItem(item.id, item.size)}
                       className="text-red-500 hover:text-red-700"
                     >
                       <Trash2 className="h-5 w-5" />
