@@ -35,8 +35,7 @@ function ProductDetail() {
 
   useEffect(() => {
     const handleProducts = async () => {
-      const response = await axios.get<Product>(`https://server.blacksheepclothing.es/products/${id}`);
-      console.log(response.data);
+      const response = await axios.get<Product>(`http://localhost:3000/products/${id}`);
       setProduct(response.data);
     }
 
@@ -55,8 +54,19 @@ function ProductDetail() {
   const handleAddToCart = (event) => {
     event.preventDefault(); // Previene la navegación
     event.stopPropagation(); // Detiene la propagación del evento
+
+    if (!selectedSize) {
+      toast({
+        title: "Error",
+        description: "Por favor, selecciona una talla antes de añadir al carrito.",
+      });
+      return;
+    }
+
+    const productWithSize = { ...product, size: selectedSize };
+
     console.log('Añadir al carrito', product);
-    addItem(product);
+    addItem(productWithSize);
     toast({
       title: "Producto añadido",
       description: `${product.name} ha sido añadido al carrito.`,

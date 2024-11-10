@@ -10,6 +10,8 @@ import image from '../../assets/images/products/1.jpeg';
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getTotalPrice } = useCartStore()
 
+  console.log(items)
+
   const shipping = 4.99
   const subtotal = getTotalPrice()
   const total = subtotal + shipping
@@ -50,6 +52,7 @@ export default function CartPage() {
                   <div className="flex-grow">
                     <h3 className="text-xl font-semibold">{item.name}</h3>
                     <p>{item.description}</p>
+                    <p>Talla: {item.size}</p>
                     <p className="text-lg font-bold mt-2">{parseFloat(item.price).toFixed(2)}€</p>
                   </div>
                   <div className="flex justify-between items-center">
