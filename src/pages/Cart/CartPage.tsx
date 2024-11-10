@@ -4,13 +4,13 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Separator } from "@/components/ui/separator"
 import { Trash2, Plus, Minus } from 'lucide-react'
 import useCartStore from '@/store/cartStore'
+import { useNavigate } from "react-router-dom"
 import { useCallback } from 'react'
 import image from '../../assets/images/products/1.jpeg';
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getTotalPrice } = useCartStore()
-
-  console.log(items)
+  const navigate = useNavigate()
 
   const shipping = 4.99
   const subtotal = getTotalPrice()
@@ -106,7 +106,7 @@ export default function CartPage() {
                 <span>{total.toFixed(2)}€</span>
               </div>
             </div>
-            <Button className="w-full text-lg py-6 mt-4 bg-black hover:bg-gray-700 transition-colors">
+            <Button onClick={() => navigate("/checkout")} className="w-full text-lg py-6 mt-4 bg-black hover:bg-gray-700 transition-colors">
               Proceder al pago
             </Button>
           </CardFooter>
