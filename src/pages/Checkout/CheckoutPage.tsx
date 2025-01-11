@@ -9,13 +9,11 @@ import { Separator } from "@/components/ui/separator";
 import { CreditCard, Truck } from 'lucide-react';
 import Layout from "@/components/Layout";
 import useCartStore from "@/store/cartStore";
-import PaymentCard from "@/components/PaymentCard";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export default function CheckoutPage() {
   const { items, getTotalPrice } = useCartStore();
-  const [paymentMethod, setPaymentMethod] = useState(null);                                                                                                                                                                                                                                                                                          
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState(false);
 
@@ -23,11 +21,12 @@ export default function CheckoutPage() {
   const subtotal = getTotalPrice();
   const total = subtotal + shipping;
 
-  async function handleCheckout() {
+  async function handleCheckout(event) {
+    event.preventDefault();
     setProcessing(true);
     setError(null);
 
-    // Llamar a tu backend para crear un Payment Intent
+    // Llamar a tu backend para crear una sesión de pago
     const response = await fetch('http://localhost:3000/stripe/create-checkout-session', {
       method: 'POST',
       headers: {
@@ -39,24 +38,7 @@ export default function CheckoutPage() {
     const data = await response.json();
 
     if (response.ok) {
-      const { clientSecret } = data;
-
-      // Confirmar el pago con Stripe
-      const stripe = await stripePromise;
-      const result = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: paymentMethod.id,
-      });
-
-      if (result.error) {
-        setError(result.error.message);
-        setProcessing(false);
-      } else {
-        // El pago fue exitoso
-        if (result.paymentIntent.status === 'succeeded') {
-          alert('¡Pago exitoso!');
-          // Aquí puedes redirigir al usuario o realizar otras acciones
-        }
-      }
+      window.location.href = data.url;
     } else {
       setError(data.error);
       setProcessing(false);
@@ -108,14 +90,6 @@ export default function CheckoutPage() {
                       </div>
                     </div>
                   </div>
-
-                  {/* Método de pago */}
-                  <Separator />
-                  <h2 className="text-xl font-semibold mb-4">Método de pago</h2>
-
-                  {/* Componente PaymentCard */}
-                  <PaymentCard onPaymentMethodCreated={setPaymentMethod} />
-
                 </div>
 
                 {/* Resumen del pedido */}
@@ -173,13 +147,15 @@ export default function CheckoutPage() {
             {/* Botón para realizar pedido */}
             <CardFooter>
               {/* Botón para realizar el pedido */}
-              <Button 
-                className={`w-full text-lg py-6 bg-black text-white hover:bg-gray-600 ${processing ? 'opacity-50 cursor-not-allowed' : ''}`} 
-                onClick={handleCheckout} 
-                disabled={!paymentMethod || processing}
-              >
-                {processing ? 'Procesando...' : 'Realizar pedido'}
-              </Button>
+              <form onSubmit={handleCheckout} className="w-full">
+                <Button 
+                  className={`w-full text-lg py-6 bg-black text-white hover:bg-gray-600 ${processing ? 'opacity-50 cursor-not-allowed' : ''}`} 
+                  type="submit"
+                  disabled={processing}
+                >
+                  {processing ? 'Procesando...' : 'Realizar pedido'}
+                </Button>
+              </form>
 
               {/* Mostrar mensaje de error si hay alguno */}
               {error && (<div className="text-red-500 mt-2">{error}</div>)}
