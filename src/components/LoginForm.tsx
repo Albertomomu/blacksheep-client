@@ -33,7 +33,7 @@ const LoginForm = () => {
     setEmailError('');
 
     try {
-      const response = await axios.post('https://server.blacksheepclothing.es/auth/login/', {
+      const response = await axios.post('http://localhost:3000/auth/login/', {
         email,
         password,
       }, {

@@ -15,7 +15,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export default function CheckoutPage() {
   const { items, getTotalPrice } = useCartStore();
-  const [paymentMethod, setPaymentMethod] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState(null);                                                                                                                                                                                                                                                                                          
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState(false);
 
@@ -28,7 +28,7 @@ export default function CheckoutPage() {
     setError(null);
 
     // Llamar a tu backend para crear un Payment Intent
-    const response = await fetch('http://localhost:3000/create-payment-intent', {
+    const response = await fetch('http://localhost:3000/stripe/create-checkout-session', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

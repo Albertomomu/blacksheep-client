@@ -11,7 +11,7 @@ export default function ShopPage() {
   const [products, setProducts] = useState([]);
 
   const handleProducts = async () => {
-    const response = await axios.get('https://server.blacksheepclothing.es/products/');
+    const response = await axios.get('http://localhost:3000/products/');
     setProducts(response.data);
   }
 
@@ -72,7 +72,7 @@ export default function ShopPage() {
               </SelectContent>
             </Select>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
             {products.map((item) => (
               <ProductCard key={item.id} item={item} />
             ))}
