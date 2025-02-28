@@ -11,7 +11,7 @@ export default function ShopPage() {
   const [products, setProducts] = useState([]);
 
   const handleProducts = async () => {
-    const response = await axios.get('http://localhost:3000/products/');
+    const response = await axios.get('https://server.blacksheepclothing.es/products/');
     setProducts(response.data);
   }
 
@@ -22,40 +22,40 @@ export default function ShopPage() {
   return (
     <Layout>
       <main className="container mx-auto px-4 py-8 flex flex-col md:flex-row max-w-[1600px]">
-      <aside className="w-full md:w-1/5 pr-8 mb-8 md:mb-0">
-      <h2 className="text-xl font-bold mb-4">Filtros</h2>
-      <div className="space-y-6">
-        <div>
-          <h3 className="font-semibold mb-2">Precio maximo</h3>
-          <Slider defaultValue={[100]} max={100} step={1} />
-          <div className="flex justify-between mt-2">
-            <span>0€</span>
-            <span>100€</span>
-          </div>
-        </div>
-        <div>
-          <h3 className="font-semibold mb-2">Tamaño</h3>
-          <div className="space-y-2">
-            {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
-              <div key={size} className="flex items-center">
-                <Checkbox id={`size-${size}`} />
-                <label htmlFor={`size-${size}`} className="ml-2">
-                  {size}
-                </label>
+        <aside className="w-full md:w-1/5 pr-8 mb-8 md:mb-0">
+          <h2 className="text-xl font-bold mb-4">Filtros</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="font-semibold mb-2">Precio maximo</h3>
+              <Slider defaultValue={[100]} max={100} step={1} />
+              <div className="flex justify-between mt-2">
+                <span>0€</span>
+                <span>100€</span>
               </div>
-            ))}
+            </div>
+            <div>
+              <h3 className="font-semibold mb-2">Tamaño</h3>
+              <div className="space-y-2">
+                {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                  <div key={size} className="flex items-center">
+                    <Checkbox id={`size-${size}`} />
+                    <label htmlFor={`size-${size}`} className="ml-2">
+                      {size}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-2">Color</h3>
+              <div className="flex flex-wrap gap-2">
+                {['bg-black', 'bg-white', 'bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500'].map((color) => (
+                  <div key={color} className={`w-6 h-6 rounded-full ${color} border border-gray-300 cursor-pointer`} />
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
-        <div>
-          <h3 className="font-semibold mb-2">Color</h3>
-          <div className="flex flex-wrap gap-2">
-            {['bg-black', 'bg-white', 'bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500'].map((color) => (
-              <div key={color} className={`w-6 h-6 rounded-full ${color} border border-gray-300 cursor-pointer`} />
-            ))}
-          </div>
-        </div>
-      </div>
-    </aside>
+        </aside>
 
         <section className="w-full md:w-4/5">
           <div className="flex justify-between items-center mb-6">

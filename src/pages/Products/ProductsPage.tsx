@@ -35,7 +35,7 @@ function ProductDetail() {
 
   useEffect(() => {
     const handleProducts = async () => {
-      const response = await axios.get<Product>(`http://localhost:3000/products/${id}`);
+      const response = await axios.get<Product>(`https://server.blacksheepclothing.es/products/${id}`);
       setProduct(response.data);
     }
 
@@ -100,8 +100,8 @@ function ProductDetail() {
                     </label>
                     <div className="flex flex-wrap gap-2">
                       {['S', 'M', 'L'].map((size) => (
-                        <Button 
-                          key={size} 
+                        <Button
+                          key={size}
                           variant={selectedSize === size ? "default" : "outline"}
                           className="flex-1"
                           onClick={() => handleSizeSelect(size)}
@@ -126,7 +126,7 @@ function ProductDetail() {
                     </div>
                   </div>
                 </div>
-                <Button 
+                <Button
                   className="w-full text-lg py-6"
                   disabled={!selectedSize} // Deshabilita el botón si no se ha seleccionado una talla
                   onClick={() => {

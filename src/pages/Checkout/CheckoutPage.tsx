@@ -27,7 +27,7 @@ export default function CheckoutPage() {
     setError(null);
 
     // Llamar a tu backend para crear una sesión de pago
-    const response = await fetch('http://localhost:3000/stripe/create-checkout-session', { 
+    const response = await fetch('https://server.blacksheepclothing.es/stripe/create-checkout-session', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -148,8 +148,8 @@ export default function CheckoutPage() {
             <CardFooter>
               {/* Botón para realizar el pedido */}
               <form onSubmit={handleCheckout} className="w-full">
-                <Button 
-                  className={`w-full text-lg py-6 bg-black text-white hover:bg-gray-600 ${processing ? 'opacity-50 cursor-not-allowed' : ''}`} 
+                <Button
+                  className={`w-full text-lg py-6 bg-black text-white hover:bg-gray-600 ${processing ? 'opacity-50 cursor-not-allowed' : ''}`}
                   type="submit"
                   disabled={processing}
                 >

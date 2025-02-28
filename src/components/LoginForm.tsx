@@ -33,7 +33,7 @@ const LoginForm = () => {
     setEmailError('');
 
     try {
-      const response = await axios.post('http://localhost:3000/auth/login/', {
+      const response = await axios.post('https://server.blacksheepclothing.es/auth/login/', {
         email,
         password,
       }, {
@@ -42,7 +42,7 @@ const LoginForm = () => {
           'Content-Type': 'application/json'
         }
       });
-      
+
       const { accessToken, user } = response.data;
       if (user && accessToken) {
         setUser(user, accessToken);
@@ -119,7 +119,7 @@ const LoginForm = () => {
             </button>
           </div>
           <div className='flex items-center justify-center mt-5'>
-          <span className='font-barlow'>¿Todavía no tienes cuenta? <a className='text-blue-500 cursor-pointer underline' href='/register'>Crea una</a></span>
+            <span className='font-barlow'>¿Todavía no tienes cuenta? <a className='text-blue-500 cursor-pointer underline' href='/register'>Crea una</a></span>
           </div>
         </form>
       </div>
