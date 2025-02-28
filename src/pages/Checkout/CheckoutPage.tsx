@@ -27,7 +27,7 @@ export default function CheckoutPage() {
     setError(null);
 
     // Llamar a tu backend para crear una sesión de pago
-    const response = await fetch('http://localhost:3000/stripe/create-checkout-session', {
+    const response = await fetch('http://localhost:3000/stripe/create-checkout-session', { 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
