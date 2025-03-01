@@ -10,7 +10,7 @@ import image from '../../assets/images/products/1.jpeg';
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getTotalPrice } = useCartStore()
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const shipping = 4.99
   const subtotal = getTotalPrice()
