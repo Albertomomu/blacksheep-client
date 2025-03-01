@@ -15,6 +15,7 @@ interface Product {
   categoryId: number;
   category: Category;
   size: string;
+  price_id: string;
 }
 
 interface CartItem extends Product {

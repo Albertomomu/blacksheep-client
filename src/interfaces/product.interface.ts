@@ -11,4 +11,5 @@ export default interface Product {
   stock: number;
   categoryId: number;
   category: Category;
+  price_id: string;
 }

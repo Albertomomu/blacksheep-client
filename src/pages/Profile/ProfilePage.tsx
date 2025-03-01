@@ -42,12 +42,12 @@ export default function ProfilePage() {
 
   const handleUpdate = async () => {
     if (!isChanged || !user) return;
-  
+
     try {
       const { id, ...updateData } = formData; // eslint-disable-line @typescript-eslint/no-unused-vars
-  
+
       const response = await axios.put(
-        `https://server.blacksheepclothing.es/customers/${user.id}`,
+        `http://localhost:3000/customers/${user.id}`,
         updateData,
         {
           headers: {
@@ -55,7 +55,7 @@ export default function ProfilePage() {
           }
         }
       );
-  
+
       if (response.status === 200) {
         // Since the server is not returning updated data, we'll use the local formData
         const updatedUser = { ...user, ...updateData };

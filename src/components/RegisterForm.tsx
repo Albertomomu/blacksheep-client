@@ -31,7 +31,7 @@ const RegisterForm = () => {
     }
 
     try {
-      const response = await axios.post('https://server.blacksheepclothing.es/auth/register/', {
+      const response = await axios.post('http://localhost:3000/auth/register/', {
         firstName,
         lastName,
         email,
@@ -42,7 +42,7 @@ const RegisterForm = () => {
       }, {
         withCredentials: true,
       });
-      
+
       const { accessToken, user } = response.data;
       if (user && accessToken) {
         setUser(user, accessToken);

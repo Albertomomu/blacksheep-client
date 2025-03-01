@@ -24,6 +24,7 @@ interface Product {
   categoryId: number;
   category: Category;
   size: string;
+  price_id: string;
 }
 
 function ProductDetail() {
@@ -35,7 +36,7 @@ function ProductDetail() {
 
   useEffect(() => {
     const handleProducts = async () => {
-      const response = await axios.get<Product>(`https://server.blacksheepclothing.es/products/${id}`);
+      const response = await axios.get<Product>(`http://localhost:3000/products/${id}`);
       setProduct(response.data);
     }
 
