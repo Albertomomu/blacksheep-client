@@ -21,7 +21,7 @@ interface Product {
   description: string;
   price: string;
   stock: number;
-  categoryId: number;
+  category_id: number;
   category: Category;
   size: string;
   price_id: string;

@@ -9,7 +9,7 @@ export default interface Product {
   description: string;
   price: string; // Asumiendo que el precio es un string, como se muestra en el ejemplo
   stock: number;
-  categoryId: number;
+  category_id: number;
   category: Category;
   price_id: string;
 }
