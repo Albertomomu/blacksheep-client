@@ -23,6 +23,31 @@ export default function CheckoutPage() {
   const { items, getTotalPrice } = useCartStore();
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    postcode: '',
+    country: '',
+  });
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [id]: value
+    }));
+  };
+
+  const handleCountryChange = (value) => {
+    setFormData(prev => ({
+      ...prev,
+      country: value
+    }));
+  };
 
   const shipping = 4.99;
   const subtotal = getTotalPrice();
@@ -33,21 +58,49 @@ export default function CheckoutPage() {
     setProcessing(true);
     setError(null);
 
-    // Llamar a tu backend para crear una sesión de pago
-    const response = await fetch('http://localhost:3000/stripe/create-checkout-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ items }),
-    });
+    try {
+      // Crear el pedido
+      const orderResponse = await fetch('http://localhost:3000/orders/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          items,
+          customer: formData,
+          shipping,
+          subtotal,
+          total,
+        }),
+      });
+      const orderData = await orderResponse.json();
+      console.log("Data order", orderData); // This logs the data
 
-    const data = await response.json();
+      if (!orderResponse.ok) {
+        throw new Error(orderData.message || 'Error al crear el pedido');
+      }
 
-    if (response.ok) {
-      window.location.href = data.url;
-    } else {
-      setError(data.error);
+      // Crear sesión de Stripe
+      const stripeResponse = await fetch('http://localhost:3000/stripe/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          items,
+          orderId: orderData.id // Enviamos el ID del pedido creado
+        }),
+      });
+
+      const stripeData = await stripeResponse.json();
+
+      if (stripeResponse.ok) {
+        window.location.href = stripeData.url;
+      } else {
+        throw new Error(stripeData.error || 'Error al procesar el pago');
+      }
+    } catch (err) {
+      setError(err.message);
       setProcessing(false);
     }
   }
@@ -70,40 +123,84 @@ export default function CheckoutPage() {
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="firstName">Nombre</Label>
-                          <Input id="firstName" placeholder="Juan" />
+                          <Input
+                            id="firstName"
+                            placeholder="Juan"
+                            value={formData.firstName}
+                            onChange={handleInputChange}
+                            required
+                          />
                         </div>
                         <div>
                           <Label htmlFor="lastName">Apellidos</Label>
-                          <Input id="lastName" placeholder="Pérez" />
+                          <Input
+                            id="lastName"
+                            placeholder="Pérez"
+                            value={formData.lastName}
+                            onChange={handleInputChange}
+                            required
+                          />
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="email">Email</Label>
-                          <Input id="email" type="email" placeholder="juan.perez@ejemplo.com" />
+                          <Input
+                            id="email"
+                            type="email"
+                            placeholder="juan.perez@ejemplo.com"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            required
+                          />
                         </div>
                         <div>
                           <Label htmlFor="phone">Teléfono</Label>
-                          <Input id="phone" type="tel" placeholder="+34 600 000 000" />
+                          <Input
+                            id="phone"
+                            type="tel"
+                            placeholder="+34 600 000 000"
+                            value={formData.phone}
+                            onChange={handleInputChange}
+                            required
+                          />
                         </div>
                       </div>
                       <div>
                         <Label htmlFor="address">Dirección</Label>
-                        <Input id="address" placeholder="Calle Mayor, 123" />
+                        <Input
+                          id="address"
+                          placeholder="Calle Mayor, 123"
+                          value={formData.address}
+                          onChange={handleInputChange}
+                          required
+                        />
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="city">Ciudad</Label>
-                          <Input id="city" placeholder="Madrid" />
+                          <Input
+                            id="city"
+                            placeholder="Madrid"
+                            value={formData.city}
+                            onChange={handleInputChange}
+                            required
+                          />
                         </div>
                         <div>
                           <Label htmlFor="postcode">Código Postal</Label>
-                          <Input id="postcode" placeholder="28001" />
+                          <Input
+                            id="postcode"
+                            placeholder="28001"
+                            value={formData.postcode}
+                            onChange={handleInputChange}
+                            required
+                          />
                         </div>
                       </div>
                       <div>
                         <Label htmlFor="country">País</Label>
-                        <Select>
+                        <Select onValueChange={handleCountryChange} value={formData.country}>
                           <SelectTrigger>
                             <SelectValue placeholder="Selecciona un país" />
                           </SelectTrigger>
