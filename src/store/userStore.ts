@@ -9,7 +9,12 @@ interface Address {
   city: string;
   province: string;
   postal_code: string;
-  country: string;
+  country: Country;
+}
+
+interface Country {
+  code: number;
+  name: string;
 }
 
 interface User {

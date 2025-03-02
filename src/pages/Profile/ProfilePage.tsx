@@ -151,7 +151,7 @@ export default function ProfilePage() {
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="country">País</Label>
-                          <Input id="country" name="address.country" value={formData?.address?.country || ''} onChange={handleInputChange} />
+                          <Input id="country" name="address.country" value={formData?.address?.country?.name || ''} onChange={handleInputChange} />
                         </div>
                       </div>
                     </div>
