@@ -9,8 +9,15 @@ import { Separator } from "@/components/ui/separator";
 import { CreditCard, Truck } from 'lucide-react';
 import Layout from "@/components/Layout";
 import useCartStore from "@/store/cartStore";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+
+const countries = [
+  { code: "ES", name: "España" },
+  { code: "FR", name: "Francia" },
+  { code: "PT", name: "Portugal" },
+];
 
 export default function CheckoutPage() {
   const { items, getTotalPrice } = useCartStore();
@@ -70,6 +77,16 @@ export default function CheckoutPage() {
                           <Input id="lastName" placeholder="Pérez" />
                         </div>
                       </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="email">Email</Label>
+                          <Input id="email" type="email" placeholder="juan.perez@ejemplo.com" />
+                        </div>
+                        <div>
+                          <Label htmlFor="phone">Teléfono</Label>
+                          <Input id="phone" type="tel" placeholder="+34 600 000 000" />
+                        </div>
+                      </div>
                       <div>
                         <Label htmlFor="address">Dirección</Label>
                         <Input id="address" placeholder="Calle Mayor, 123" />
@@ -86,7 +103,18 @@ export default function CheckoutPage() {
                       </div>
                       <div>
                         <Label htmlFor="country">País</Label>
-                        {/* Aquí puedes agregar un Select para elegir el país */}
+                        <Select>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecciona un país" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {countries.map((country) => (
+                              <SelectItem key={country.code} value={country.code}>
+                                {country.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </div>
                     </div>
                   </div>
