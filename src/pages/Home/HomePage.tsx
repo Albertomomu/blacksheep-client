@@ -12,7 +12,7 @@ function HomePage() {
   useEffect(() => {
     const handleProducts = async () => {
       try {
-        const response = await axios.get('https://server.blacksheepclothing.es/products/');
+        const response = await axios.get('http://localhost:3000/products/');
         setProducts(response.data); // Actualiza el estado global
       } catch (error) {
         console.error('Error fetching products:', error);
