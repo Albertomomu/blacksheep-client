@@ -31,7 +31,6 @@ export default function ProfilePage() {
       });
       
       if (response.status === 200) {
-        console.log('Pedidos:', response.data);
         setOrders(response.data);
       }
     } catch (error) {
@@ -232,7 +231,7 @@ export default function ProfilePage() {
                                     </Dialog.Close>
                                   </div>
 
-                                  <div className="grid grid-cols-2 gap-4 text-sm">
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                                     <div className="space-y-2">
                                       <p className="font-medium">Información del cliente</p>
                                       <div className="space-y-1 text-gray-600">
