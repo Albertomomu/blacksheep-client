@@ -24,12 +24,12 @@ export default function ProfilePage() {
 
   const handleOrders = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/orders/customer/${user.id}`, {
+      const response = await axios.get(`https://server.blacksheepclothing.es/orders/customer/${user.id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       });
-      
+
       if (response.status === 200) {
         setOrders(response.data);
       }
@@ -78,7 +78,7 @@ export default function ProfilePage() {
       const { id, ...updateData } = formData; // eslint-disable-line @typescript-eslint/no-unused-vars
 
       const response = await axios.put(
-        `http://localhost:3000/customers/${user.id}`,
+        `https://server.blacksheepclothing.es/customers/${user.id}`,
         updateData,
         {
           headers: {
@@ -108,6 +108,20 @@ export default function ProfilePage() {
     pending: 'bg-orange-500',
     paid: 'bg-green-500',
     canceled: 'bg-red-500'
+  };
+
+  const translateStatus = (status) => {
+    console.log(status);
+    switch (status) {
+      case 'pending':
+        return 'Pendiente de pago';
+      case 'paid':
+        return 'Completado';
+      case 'canceled':
+        return 'Cancelado';
+      default:
+        return 'Desconocido';
+    }
   };
 
   return (
@@ -195,7 +209,7 @@ export default function ProfilePage() {
                   </TabsContent>
                   <TabsContent value="orders" className="space-y-4">
                     <div className="space-y-4">
-                    {orders.map((order) => (
+                      {orders.map((order) => (
                         <div key={order.id} className="flex items-center justify-between p-4 bg-gray-100 rounded-lg gap-2">
                           <div className="flex items-center space-x-4">
                             <Package className="w-6 h-6" />
@@ -206,11 +220,11 @@ export default function ProfilePage() {
                               </p>
                             </div>
                           </div>
-                          
+
                           <Dialog.Root>
                             <Dialog.Trigger asChild>
-                              <Button 
-                                variant="outline" 
+                              <Button
+                                variant="outline"
                                 onClick={() => setSelectedOrder(order)}
                                 className="hover:bg-gray-200 transition-colors"
                               >
@@ -282,10 +296,8 @@ export default function ProfilePage() {
 
                                   <div className="flex justify-between items-center pt-4 border-t">
                                     <div className="flex items-center gap-2">
-                                    <span className={`h-2 w-2 rounded-full ${
-                                      statusColors[selectedOrder?.status?.toLowerCase()] || 'bg-red-500'
-                                    }`} />
-                                      <p className="text-sm capitalize">{selectedOrder?.status}</p>
+                                    <span className={`h-2 w-2 rounded-full ${statusColors[selectedOrder?.status?.toLowerCase()] || 'bg-red-500'}`} />
+                                    <p className="text-sm capitalize">{translateStatus(selectedOrder?.status?.toLowerCase())}</p>
                                     </div>
                                     <p className="text-sm text-gray-500">
                                       Fecha: {new Date(selectedOrder?.created_at).toLocaleDateString('es-ES')}

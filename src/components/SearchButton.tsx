@@ -11,7 +11,7 @@ const SearchButton = () => {
   const navigate = useNavigate();
 
   const handleProducts = async () => {
-    const response = await axios.get('http://localhost:3000/products/');
+    const response = await axios.get('https://server.blacksheepclothing.es/products/');
     setProducts(response.data);
   }
 

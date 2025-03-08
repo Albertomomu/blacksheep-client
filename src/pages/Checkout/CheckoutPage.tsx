@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { CreditCard, Truck } from 'lucide-react';
 import Layout from "@/components/Layout";
 import useCartStore from "@/store/cartStore";
+import useUserStore from "@/store/userStore";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -21,6 +22,7 @@ const countries = [
 
 export default function CheckoutPage() {
   const { items, getTotalPrice } = useCartStore();
+  const { user } = useUserStore();
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [formData, setFormData] = useState({
@@ -60,7 +62,7 @@ export default function CheckoutPage() {
 
     try {
       // Crear el pedido
-      const orderResponse = await fetch('http://localhost:3000/orders/create', {
+      const orderResponse = await fetch('https://server.blacksheepclothing.es/orders/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,17 +73,17 @@ export default function CheckoutPage() {
           shipping,
           subtotal,
           total,
+          customer_id: user ? user.id : null,
         }),
       });
       const orderData = await orderResponse.json();
-      console.log("Data order", orderData); // This logs the data
 
       if (!orderResponse.ok) {
         throw new Error(orderData.message || 'Error al crear el pedido');
       }
 
       // Crear sesión de Stripe
-      const stripeResponse = await fetch('http://localhost:3000/stripe/create-checkout-session', {
+      const stripeResponse = await fetch('https://server.blacksheepclothing.es/stripe/create-checkout-session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -31,7 +31,7 @@ const RegisterForm = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/auth/register/', {
+      const response = await axios.post('https://server.blacksheepclothing.es/auth/register/', {
         firstName,
         lastName,
         email,
