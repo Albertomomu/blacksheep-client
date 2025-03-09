@@ -8,6 +8,8 @@ import RegisterPage from './pages/Register/RegisterPage';
 import ShopPage from './pages/Shop/ShopPage';
 import CartPage from './pages/Cart/CartPage';
 import CheckoutPage from './pages/Checkout/CheckoutPage';
+import SuccessPage from './pages/Success/SuccessPage';
+import CancelPage from './pages/Cancel/CancelPage';
 
 function App() {
 
@@ -22,6 +24,8 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path='/success' element={<SuccessPage />} />
+        <Route path='/cancel' element={<CancelPage />} />
       </Routes>
     </BrowserRouter>
   )
