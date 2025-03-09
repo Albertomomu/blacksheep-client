@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/Home/HomePage';
 import ProductDetailPage from './pages/Products/ProductsPage';
 import LoginPage from './pages/Login/LoginPage';
@@ -10,11 +10,12 @@ import CartPage from './pages/Cart/CartPage';
 import CheckoutPage from './pages/Checkout/CheckoutPage';
 import SuccessPage from './pages/Success/SuccessPage';
 import CancelPage from './pages/Cancel/CancelPage';
+import NotFoundPage from './pages/NotFound/NotFoundPage';
 
 function App() {
 
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -26,8 +27,9 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path='/success' element={<SuccessPage />} />
         <Route path='/cancel' element={<CancelPage />} />
+        <Route path="*" element={<NotFoundPage />} /> {/* Catch-all route for 404 */}
       </Routes>
-    </BrowserRouter>
+    </Router>
   )
 }
 
