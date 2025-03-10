@@ -36,6 +36,10 @@ export default function CheckoutPage() {
     country: '',
   });
 
+  const isFormValid = () => {
+    return Object.values(formData).every(field => field.trim() !== '');
+  };
+
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData(prev => ({
@@ -57,6 +61,10 @@ export default function CheckoutPage() {
 
   async function handleCheckout(event) {
     event.preventDefault();
+    if (!isFormValid()) {
+      setError('Por favor, completa todos los campos.');
+      return;
+    }
     setProcessing(true);
     setError(null);
 
@@ -272,7 +280,7 @@ export default function CheckoutPage() {
             </CardContent>
 
             {/* Botón para realizar pedido */}
-            <CardFooter>
+            <CardFooter className='flex flex-col'>
               {/* Botón para realizar el pedido */}
               <form onSubmit={handleCheckout} className="w-full">
                 <Button
