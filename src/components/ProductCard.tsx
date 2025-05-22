@@ -10,7 +10,7 @@ const ProductCard = ({item}) => {
         <img
           src={image}
           alt={`Product ${item.name}`}
-          className="w-full h-64 object-cover" />
+          className="w-full h-auto object-cover" />
         <div className="p-4">
           <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
           <p className="text-gray-600 mb-4">{item.description}</p>

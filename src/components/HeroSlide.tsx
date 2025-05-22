@@ -11,7 +11,7 @@ const HeroSlide = ({ black }) => {
       <p className={`absolute top-[65%] left-5 text-lg ${black ? 'text-white' : ''}`}>
         Camisetas de máxima calidad 100% algodón para el mejor estilo a la última moda y conseguir <br/> el mejor precio impresionar a esa nena que te mola.
       </p>
-      <button className={`absolute top-[85%] left-5 bg-black text-white px-4 py-4 rounded`}>
+      <button onClick={() => window.location.href = '/products'} className={`absolute top-[85%] left-5 bg-black text-white px-4 py-4 rounded`}>
         Comprar ahora
       </button>
     </>

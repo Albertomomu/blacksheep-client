@@ -25,7 +25,7 @@ function Header() {
         </a>
         <nav className='hidden md:flex gap-5 font-openSans'>
           <a href="/products">Tienda</a>
-          <a href="#">Sobre Nosotros</a>
+          <a href="/about-us">Sobre Nosotros</a>
           <a href="#">Contacto</a>
         </nav>
       </div>

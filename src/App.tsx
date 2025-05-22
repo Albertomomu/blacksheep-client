@@ -11,6 +11,7 @@ import CheckoutPage from './pages/Checkout/CheckoutPage';
 import SuccessPage from './pages/Success/SuccessPage';
 import CancelPage from './pages/Cancel/CancelPage';
 import NotFoundPage from './pages/NotFound/NotFoundPage';
+import AboutUs from './pages/AboutUs/AboutUs';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path='/success' element={<SuccessPage />} />
         <Route path='/cancel' element={<CancelPage />} />
+        <Route path="/about-us" element={<AboutUs />} />
         <Route path="*" element={<NotFoundPage />} /> {/* Catch-all route for 404 */}
       </Routes>
     </Router>
