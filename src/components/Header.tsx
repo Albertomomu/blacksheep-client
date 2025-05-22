@@ -91,7 +91,7 @@ function Header() {
           <div className='flex flex-col items-center justify-between h-full'>
             <div>
               <a href="/products" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Tienda</a>
-              <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Sobre Nosotros</a>
+              <a href="/about-us" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Sobre Nosotros</a>
               <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Contacto</a>
               <a href={user ? '/profile' : '/login'} className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Perfil</a>
             </div>
