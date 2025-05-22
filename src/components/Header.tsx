@@ -26,7 +26,7 @@ function Header() {
         <nav className='hidden md:flex gap-5 font-openSans'>
           <a href="/products">Tienda</a>
           <a href="/about-us">Sobre Nosotros</a>
-          <a href="#">Contacto</a>
+          <a href="/contact">Contacto</a>
         </nav>
       </div>
       <div className='flex items-center gap-6'>
@@ -92,7 +92,7 @@ function Header() {
             <div>
               <a href="/products" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Tienda</a>
               <a href="/about-us" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Sobre Nosotros</a>
-              <a href="#" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Contacto</a>
+              <a href="/contact" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Contacto</a>
               <a href={user ? '/profile' : '/login'} className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">Perfil</a>
             </div>
             <LogoutButton />
