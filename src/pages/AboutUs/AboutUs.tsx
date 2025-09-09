@@ -10,7 +10,7 @@ import { Instagram, Phone, Linkedin } from 'lucide-react';
 
 interface Social {
   url: string;
-  Icon: React.ComponentType<{ size?: number }>;
+  Icon: React.ComponentType<{ size?: number | string }>;
 }
 
 interface TeamMember {
@@ -72,7 +72,7 @@ const AboutUs: React.FC = () => (
 
     {/* Historia detallada */}
     <section className="about-story">
-      <ContentContainer>
+      <ContentContainer className="">
         <p>
           Nuestra primera experiencia fue con tiradas muy pequeñas en un estudio de Valencia.
           Alejandro se encargaba de los diseños y pruebas de color, mientras Alberto coordinaba la
@@ -84,7 +84,7 @@ const AboutUs: React.FC = () => (
 
     {/* Equipo */}
     <section className="team-section">
-      <ContentContainer>
+      <ContentContainer className="">
         <h2 className="team-title">Conócenos</h2>
         <div className="team-grid">
           {teamMembers.map((m) => (

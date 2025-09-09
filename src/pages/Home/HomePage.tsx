@@ -27,7 +27,7 @@ function HomePage() {
   return (
     <Layout>
       <HeroSection />
-      <ContentContainer>
+      <ContentContainer className="">
         <CategoriesSection products={products} />
       </ContentContainer>
       <DiscountBanner />

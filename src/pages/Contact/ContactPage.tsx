@@ -1,13 +1,60 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Separator } from "@/components/ui/separator"
-import { Mail, Phone, MapPin, Clock } from 'lucide-react'
-import Layout from '@/components/Layout'
+// src/pages/ContactPage.tsx
+import React, { useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Separator } from "@/components/ui/separator";
+import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import Layout from '@/components/Layout';
 
-export default function Component() {
+interface FormState {
+  firstName: string;
+  lastName: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+export default function ContactPage() {
+  const [form, setForm] = useState<FormState>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm(prev => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('sending');
+
+    try {
+      const res = await fetch('https://server.blacksheepclothing.es/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || 'Error al enviar el formulario');
+      }
+
+      setStatus('success');
+      setForm({ firstName: '', lastName: '', email: '', subject: '', message: '' });
+    } catch (err) {
+      console.error(err);
+      setStatus('error');
+    }
+  };
+
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8 bg-white text-black">
@@ -16,41 +63,78 @@ export default function Component() {
             <CardTitle className="text-3xl font-bold">Contacto</CardTitle>
           </CardHeader>
           <CardContent className="p-6">
-            <div className="grid md:grid-cols-2 gap-8">
+            <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-8 items-center">
+              {/* Formulario */}
               <div className="space-y-6">
-                <div>
-                  <h2 className="text-xl font-semibold mb-4">Envíanos un mensaje</h2>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="firstName">Nombre</Label>
-                        <Input id="firstName" placeholder="Juan" />
-                      </div>
-                      <div>
-                        <Label htmlFor="lastName">Apellidos</Label>
-                        <Input id="lastName" placeholder="Pérez" />
-                      </div>
-                    </div>
+                <h2 className="text-xl font-semibold mb-4">Envíanos un mensaje</h2>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="email">Correo electrónico</Label>
-                      <Input id="email" type="email" placeholder="juan.perez@example.com" />
-                    </div>
-                    <div>
-                      <Label htmlFor="subject">Asunto</Label>
-                      <Input id="subject" placeholder="Consulta sobre mi pedido" />
-                    </div>
-                    <div>
-                      <Label htmlFor="message">Mensaje</Label>
-                      <Textarea 
-                        id="message" 
-                        placeholder="Escribe tu mensaje aquí..." 
-                        className="min-h-[150px]" 
+                      <Label htmlFor="firstName">Nombre</Label>
+                      <Input
+                        id="firstName"
+                        value={form.firstName}
+                        onChange={handleChange}
+                        placeholder="Juan"
+                        required
                       />
                     </div>
-                    <Button className="w-full">Enviar mensaje</Button>
+                    <div>
+                      <Label htmlFor="lastName">Apellidos</Label>
+                      <Input
+                        id="lastName"
+                        value={form.lastName}
+                        onChange={handleChange}
+                        placeholder="Pérez"
+                        required
+                      />
+                    </div>
                   </div>
+                  <div>
+                    <Label htmlFor="email">Correo electrónico</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      placeholder="juan.perez@example.com"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="subject">Asunto</Label>
+                    <Input
+                      id="subject"
+                      value={form.subject}
+                      onChange={handleChange}
+                      placeholder="Consulta sobre mi pedido"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="message">Mensaje</Label>
+                    <Textarea
+                      id="message"
+                      value={form.message}
+                      onChange={handleChange}
+                      placeholder="Escribe tu mensaje aquí..."
+                      className="min-h-[150px]"
+                      required
+                    />
+                  </div>
+                  <Button type="submit" className="w-full" disabled={status === 'sending'}>
+                    {status === 'sending' ? 'Enviando…' : 'Enviar mensaje'}
+                  </Button>
+                  {status === 'success' && (
+                    <p className="mt-2 text-green-600">¡Mensaje enviado con éxito!</p>
+                  )}
+                  {status === 'error' && (
+                    <p className="mt-2 text-red-600">Error al enviar, inténtalo de nuevo.</p>
+                  )}
                 </div>
               </div>
+
+              {/* Información y Mapa */}
               <div className="space-y-6">
                 <div>
                   <h2 className="text-xl font-semibold mb-4">Información de contacto</h2>
@@ -59,7 +143,7 @@ export default function Component() {
                       <MapPin className="w-5 h-5 mt-0.5" />
                       <div>
                         <p className="font-medium">Dirección</p>
-                        <p className="text-gray-600">C/ d'Alboraia, 67, 2bajo izq, Benimaclet</p>
+                        <p className="text-gray-600">C/ d'Alboraia, 67, 2 bajo izq, Benimaclet</p>
                         <p className="text-gray-600">46010 Valencia</p>
                         <p className="text-gray-600">España</p>
                       </div>
@@ -89,10 +173,11 @@ export default function Component() {
                     </div>
                   </div>
                 </div>
+
                 <Separator />
+
                 <div>
                   <h2 className="text-xl font-semibold mb-4">Nuestra ubicación</h2>
-                  <div className="bg-gray-200 rounded-lg w-full h-[250px] flex items-center justify-center">
                   <div className="bg-gray-200 rounded-lg w-full h-[250px] overflow-hidden">
                     <iframe
                       className="w-full h-full"
@@ -103,13 +188,12 @@ export default function Component() {
                       referrerPolicy="no-referrer-when-downgrade"
                     />
                   </div>
-                  </div>
                 </div>
               </div>
-            </div>
+            </form>
           </CardContent>
         </Card>
       </div>
     </Layout>
-  )
+  );
 }
