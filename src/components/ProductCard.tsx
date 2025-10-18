@@ -1,29 +1,32 @@
-import { Button } from "@/components/ui/button"
-import image from '../assets/images/products/1.jpeg';
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
-const ProductCard = ({item}) => {
-
+const ProductCard = ({ item }) => {
   return (
-    <Link to={`/products/${item.id}`}>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden w-full">
+    <Link to={`/products/${item.id}`} className="h-full">
+      <div className="flex flex-col justify-between bg-white rounded-xl shadow-md overflow-hidden h-full">
         <img
-          src={image}
-          alt={`Product ${item.name}`}
-          className="w-full h-auto object-cover" />
-        <div className="p-4">
-          <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
-          <p className="text-gray-600 mb-4">{item.description}</p>
-          <div className="flex justify-between items-center">
-            <span className="text-xl font-bold">{item.price}€</span>
-            <Link to={`/products/${item.id}`}>
-              <Button>Ver producto</Button>
-            </Link>
+          src={item.imageurl || "/placeholder.jpg"}
+          alt={item.name}
+          className="w-full h-80 object-cover"
+        />
+        <div className="flex flex-col justify-between flex-1 p-4">
+          <div>
+            <h3 className="text-lg font-semibold mb-1">{item.name}</h3>
+            <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+              {item.description}
+            </p>
+          </div>
+          <div className="flex justify-between items-center mt-auto">
+            <span className="text-lg font-bold">{item.price}€</span>
+            <Button asChild>
+              <Link to={`/products/${item.id}`}>Ver producto</Link>
+            </Button>
           </div>
         </div>
       </div>
     </Link>
-  )
-}
+  );
+};
 
-export default ProductCard
+export default ProductCard;
