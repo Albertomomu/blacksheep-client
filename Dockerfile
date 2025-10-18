@@ -1,21 +1,14 @@
-# ---- Etapa 1: Build ----
+# Etapa 1: Build de la app con Node
 FROM node:18 AS builder
 WORKDIR /app
-
-# Copiamos los archivos de la app
 COPY package*.json ./
 RUN npm ci
-
 COPY . .
 RUN npm run build
 
-# ---- Etapa 2: Servir con Nginx ----
+# Etapa 2: Servir con Nginx
 FROM nginx:alpine
-# Copiamos los archivos generados por Vite al directorio de Nginx
 COPY --from=builder /app/dist /usr/share/nginx/html
-
-# Exponemos el puerto 80 (el estándar HTTP)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
-
-# Iniciamos Nginx
 CMD ["nginx", "-g", "daemon off;"]
