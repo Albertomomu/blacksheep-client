@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator";
 import { Layout } from '../../components';
-import image from '../../assets/images/products/1.jpeg';
 import axios from "axios";
 import Loader from '@/components/Loader';
 import useCartStore from '@/store/cartStore';
@@ -82,7 +81,7 @@ function ProductDetail() {
             <div className="grid md:grid-cols-2 gap-8 place-items-center w-full">
               <div className="space-y-4">
                 <img
-                  src={image}
+                  src={ product.imageurl }
                   alt="Camiseta Dreamer - Vista frontal y trasera"
                   className="w-full h-auto object-cover rounded-md"
                 />

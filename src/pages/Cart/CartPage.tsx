@@ -6,7 +6,6 @@ import { Trash2, Plus, Minus } from 'lucide-react'
 import useCartStore from '@/store/cartStore'
 import { useNavigate } from "react-router-dom"
 import { useCallback } from 'react'
-import image from '../../assets/images/products/1.jpeg';
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getTotalPrice } = useCartStore()
@@ -45,7 +44,7 @@ export default function CartPage() {
               {items.map((item) => (
                 <div key={`${item.id}-${item.size}`} className="flex flex-col md:flex-row md:gap-4 space-y-4 p-4 rounded-lg border border-gray-200">
                   <img
-                    src={image}
+                    src={ item.imageurl }
                     alt={`${item.name}`}
                     className="w-full h-full md:w-64 object-cover rounded-md"
                   />

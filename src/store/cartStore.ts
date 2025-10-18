@@ -19,6 +19,7 @@ interface Product {
 }
 
 interface CartItem extends Product {
+  imageurl: string;
   quantity: number;
 }
 

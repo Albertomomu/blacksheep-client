@@ -2,7 +2,6 @@ import Product from '@/interfaces/product.interface';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import image from '../assets/images/products/1.jpeg';
 
 const SearchButton = () => {
   const [searchText, setSearchText] = useState('');
@@ -60,7 +59,7 @@ const SearchButton = () => {
                 className="p-2 hover:bg-gray-100 flex items-center cursor-pointer"
                 onClick={() => handleProductClick(result.id)}
               >
-                <img src={image} alt={result.name} className="w-10 h-auto mr-2" />
+                <img src={ result.imageurl } alt={result.name} className="w-10 h-auto mr-2" />
                 <span>{result.name}</span>
               </div>
             ))}

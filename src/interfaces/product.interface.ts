@@ -6,6 +6,7 @@ interface Category {
 export default interface Product {
   id: number;
   name: string;
+  imageurl: string;
   description: string;
   price: string; // Asumiendo que el precio es un string, como se muestra en el ejemplo
   stock: number;

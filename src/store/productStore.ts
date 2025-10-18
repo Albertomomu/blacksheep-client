@@ -6,8 +6,9 @@ interface Category {
   name: string;
 }
 
-interface Product {
+interface Product{
   id: number;
+  imageurl: string;
   name: string;
   description: string;
   price: string; // Asumiendo que el precio es un string, como se muestra en el ejemplo

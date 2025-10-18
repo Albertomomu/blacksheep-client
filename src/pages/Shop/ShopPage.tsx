@@ -15,6 +15,8 @@ export default function ShopPage() {
     setProducts(response.data);
   }
 
+  console.log(products);
+
   useEffect(() => {
     handleProducts();
   }, [])
