@@ -35,20 +35,19 @@ export default function ShopPage() {
       setFiltered(data);
 
       // 📦 extraer categorías únicas (soporta objetos o strings)
-      const uniqueCategories = [
-        ...new Set(
-          data
-            .map((p) => {
-              if (typeof p.category === "string") return p.category.toLowerCase();
-              if (p.category && typeof p.category === "object" && p.category.name)
-                return p.category.name.toLowerCase();
-              return null;
-            })
-            .filter(Boolean)
-        ),
-      ];
+      const categoryNames = data
+        .map((p): string | null => {
+          if (typeof p.category === "string") return p.category.toLowerCase();
+          if (p.category && typeof p.category === "object" && "name" in p.category)
+            return String(p.category.name).toLowerCase();
+          return null;
+        })
+        .filter((c): c is string => c !== null);
+
+      const uniqueCategories = Array.from(new Set(categoryNames)) as string[];
 
       setCategories(uniqueCategories);
+
     } catch (error) {
       console.error("Error cargando productos:", error);
     } finally {
@@ -89,7 +88,11 @@ export default function ShopPage() {
     } else if (sortBy === "price-high-low") {
       result.sort((a, b) => b.price - a.price);
     } else if (sortBy === "newest") {
-      result.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      result.sort((a, b) => {
+        const dateA = new Date(a.created_at ?? 0).getTime();
+        const dateB = new Date(b.created_at ?? 0).getTime();
+        return dateB - dateA;
+      });
     }
 
     setFiltered(result);

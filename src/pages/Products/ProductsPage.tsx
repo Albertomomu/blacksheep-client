@@ -24,7 +24,7 @@ interface Product {
   category_id: number;
   category: Category;
   size?: string;
-  price_id?: string;
+  price_id: string;
 }
 
 function ProductDetail() {
