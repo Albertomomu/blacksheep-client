@@ -9,6 +9,7 @@ interface Category {
 interface Product {
   id: number;
   name: string;
+  imageurl: string;
   description: string;
   price: string;
   stock: number;
