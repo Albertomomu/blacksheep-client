@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { useParams } from 'react-router-dom';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Layout } from '../../components';
 import axios from "axios";
 import Loader from '@/components/Loader';
 import useCartStore from '@/store/cartStore';
-import { useToast } from "@/components/hooks/use-toast"
+import { useToast } from "@/components/hooks/use-toast";
 
 interface Category {
   id: number;
@@ -16,14 +16,15 @@ interface Category {
 
 interface Product {
   id: number;
+  imageurl: string;
   name: string;
   description: string;
   price: string;
   stock: number;
   category_id: number;
   category: Category;
-  size: string;
-  price_id: string;
+  size?: string;
+  price_id?: string;
 }
 
 function ProductDetail() {
@@ -31,42 +32,51 @@ function ProductDetail() {
   const { addItem } = useCartStore();
   const { toast } = useToast();
   const [product, setProduct] = useState<Product | null>(null);
-  const [selectedSize, setSelectedSize] = useState<string>(''); // Nuevo estado para la talla seleccionada
+  const [selectedSize, setSelectedSize] = useState<string>('');
 
   useEffect(() => {
     const handleProducts = async () => {
-      const response = await axios.get<Product>(`https://server.blacksheepclothing.es/products/${id}`);
-      setProduct(response.data);
-    }
+      try {
+        const response = await axios.get<Product>(`https://server.blacksheepclothing.es/products/${id}`);
+        setProduct(response.data);
+      } catch (err) {
+        console.error("Error cargando producto:", err);
+      }
+    };
 
     handleProducts();
-  }, [id])
+  }, [id]);
 
-  // Nueva función para manejar la selección de talla
+  if (!product) return <Loader />;
+
+  // ⚙️ Detectar si es una camiseta (u otra categoría con talla)
+  const categoryName = product.category?.name?.toLowerCase() || "";
+  const hasSizes = categoryName.includes("camiseta");
+  const hasColors = categoryName.includes("camiseta"); // puedes extenderlo a otras categorías si quieres
+
   const handleSizeSelect = (size: string) => {
     setSelectedSize(size);
   };
 
-  if (!product) {
-    return <Loader />
-  }
+  const handleAddToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-  const handleAddToCart = (event) => {
-    event.preventDefault(); // Previene la navegación
-    event.stopPropagation(); // Detiene la propagación del evento
-
-    if (!selectedSize) {
+    // Si el producto requiere talla y no se ha elegido, mostrar aviso
+    if (hasSizes && !selectedSize) {
       toast({
-        title: "Error",
-        description: "Por favor, selecciona una talla antes de añadir al carrito.",
+        title: "Selecciona una talla",
+        description: "Debes elegir una talla antes de añadir este producto al carrito.",
       });
       return;
     }
 
-    const productWithSize = { ...product, size: selectedSize };
+    const productToAdd = {
+      ...product,
+      ...(hasSizes && { size: selectedSize }),
+    };
 
-    console.log('Añadir al carrito', product);
-    addItem(productWithSize);
+    addItem(productToAdd);
     toast({
       title: "Producto añadido",
       description: `${product.name} ha sido añadido al carrito.`,
@@ -79,59 +89,72 @@ function ProductDetail() {
         <Card className="overflow-hidden shadow-none border-none">
           <CardContent className="p-6">
             <div className="grid md:grid-cols-2 gap-8 place-items-center w-full">
+              
+              {/* Imagen del producto */}
               <div className="space-y-4">
                 <img
-                  src={ product.imageurl }
-                  alt="Camiseta Dreamer - Vista frontal y trasera"
+                  src={product.imageurl}
+                  alt={product.name}
                   className="w-full h-auto object-cover rounded-md"
                 />
               </div>
+
+              {/* Detalles */}
               <div className="space-y-6 w-full">
                 <div>
                   <h1 className="text-3xl font-bold">{product.name}</h1>
-                  <p className="text-xl mt-2">{product.description}</p>
+                  <p className="text-lg mt-2 text-gray-700">{product.description}</p>
                 </div>
+
                 <p className="text-3xl font-bold">{product.price}€</p>
                 <Separator />
-                <div className="space-y-4">
-                  <div>
-                    <label htmlFor="size" className="block text-sm font-medium mb-2">
-                      Tamaño
-                    </label>
-                    <div className="flex flex-wrap gap-2">
-                      {['S', 'M', 'L'].map((size) => (
-                        <Button
-                          key={size}
-                          variant={selectedSize === size ? "default" : "outline"}
-                          className="flex-1"
-                          onClick={() => handleSizeSelect(size)}
-                        >
-                          {size}
-                        </Button>
-                      ))}
-                    </div>
+
+                {/* Mostrar talla y color solo si aplica */}
+                {(hasSizes || hasColors) && (
+                  <div className="space-y-4">
+                    {hasSizes && (
+                      <div>
+                        <label className="block text-sm font-medium mb-2">
+                          Tamaño
+                        </label>
+                        <div className="flex flex-wrap gap-2">
+                          {['S', 'M', 'L'].map((size) => (
+                            <Button
+                              key={size}
+                              variant={selectedSize === size ? "default" : "outline"}
+                              className="flex-1"
+                              onClick={() => handleSizeSelect(size)}
+                            >
+                              {size}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {hasColors && (
+                      <div>
+                        <label className="block text-sm font-medium mb-2">
+                          Color
+                        </label>
+                        <div className="flex space-x-2">
+                          {['bg-black'].map((color) => (
+                            <button
+                              key={color}
+                              className={`w-8 h-8 rounded-full ${color} border border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500`}
+                              aria-label={`Seleccionar color ${color.replace('bg-', '')}`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div>
-                    <label htmlFor="color" className="block text-sm font-medium mb-2">
-                      Color
-                    </label>
-                    <div className="flex space-x-2">
-                      {['bg-black'].map((color) => (
-                        <button
-                          key={color}
-                          className={`w-8 h-8 rounded-full ${color} border border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500`}
-                          aria-label={`Seleccionar color ${color.replace('bg-', '')}`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                )}
+
                 <Button
                   className="w-full text-lg py-6"
-                  disabled={!selectedSize} // Deshabilita el botón si no se ha seleccionado una talla
-                  onClick={() => {
-                    handleAddToCart(event);
-                  }}
+                  disabled={hasSizes && !selectedSize}
+                  onClick={handleAddToCart}
                 >
                   Añadir al carrito
                 </Button>
